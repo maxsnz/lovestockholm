@@ -8,5 +8,4 @@
 /public/system
 .DS_Store
 .sass-cache
-config/environments/development.rb
 .env
