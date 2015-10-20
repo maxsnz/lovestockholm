@@ -1,22 +1,20 @@
 Lovestockholm::Application.routes.draw do
-  scope "lovestockholm" do
-    resources :pages
-    get :widget, to: 'pages#widget'
-    root "pages#index"
+  resources :pages
+  get :widget, to: 'pages#widget'
+  root "pages#index"
 
-    namespace :api, defaults: {format: :json} do
-      resources :results, only: [:index, :create, :update] do
-        member do
-          post :publish
-        end
+  namespace :api, defaults: {format: :json} do
+    resources :results, only: [:index, :create, :update] do
+      member do
+        post :publish
+      end
 
-        collection do
-          get :all
-          get :winners
-        end
+      collection do
+        get :all
+        get :winners
       end
     end
-
-    ActiveAdmin.routes(self)
   end
+
+  ActiveAdmin.routes(self)
 end

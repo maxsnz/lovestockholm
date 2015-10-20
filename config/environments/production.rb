@@ -78,9 +78,9 @@ Lovestockholm::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  Rails.configuration.ga_id = 'UA-33105768-1'
-  Rails.configuration.vk_id = '4783792'
-  Rails.configuration.vk_secret = 'eDWG1u4y31X3aW4UW8vF'
-  Rails.configuration.fb_id = '1422742581351996'
-  Rails.configuration.fb_secret = 'a0afb7b32e944ef539801477eb57c2db'
+  Rails.configuration.ga_id = 'UA-69088337-1'
+  Rails.configuration.vk_id = '5114156'
+  Rails.configuration.vk_secret = 'zFSiKaZg0PXMDaFKUMyH'
+  Rails.configuration.fb_id = '1721977504688790'
+  Rails.configuration.fb_secret = 'bcdbbb4f96b796dca7da2a8582c28d0a'
 end
