@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    meta charset="UTF-8"
+    title Lovestockholm
+    meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
+
+    = stylesheet_link_tag 'widget'
+
+    = render "_/google_analytics"
+
+  body
+
+    p widget.html.slim
+    .loader
+    .arrow-position
+      .arrow.arrow-up
+      .arrow.arrow-down
+
+    = javascript_include_tag "widget" 

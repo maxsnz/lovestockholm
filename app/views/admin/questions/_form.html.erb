@@ -1,0 +1,6 @@
+<%= simple_form_for [:admin, resource] do |f| %>
+  <%= f.input :question %>
+  <%= f.input :options %>
+  <%= f.input :brand %>
+  <%= render "_/buttons", f: f %>
+<% end %>

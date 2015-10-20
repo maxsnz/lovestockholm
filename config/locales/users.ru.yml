@@ -1,0 +1,24 @@
+ru:
+  activerecord:
+    state_machines:
+      user:
+        state:
+          states:
+            guest: Нет доступа
+            moderator: Модератор
+          events:
+            make_guest: Нет доступа
+            make_moderator: Модератор
+
+    models:
+      user:
+        one: ""
+        few: Пользователи
+        many: Пользователи
+        other: Пользователи
+
+    attributes:
+      user:
+        email: Электронная почта
+        name: Имя
+        state: Статус

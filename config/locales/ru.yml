@@ -1,0 +1,4 @@
+ru:
+  time:
+    formats:
+      list: '%d/%m/%Y'

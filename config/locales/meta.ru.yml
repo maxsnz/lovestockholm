@@ -1,0 +1,12 @@
+ru:
+  meta:
+    _defaults:
+      og:title: 'Lovestockholm'
+      og:type: article
+      og:image: share.jpg
+      og:site_name: Lovestockholm
+      og:description: 'Lovestockholm'
+    
+    pages:
+      index: 
+

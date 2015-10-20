@@ -1,0 +1,20 @@
+@import "compass/css3";
+
+// $g-layout: smart; 
+$g-spacing: 10px;
+$g-sprite-dimensions: true;
+@import "g/*.png"; 
+@include all-g-sprites;
+
+body {
+  color:#fff;
+  background: #000;
+}
+
+.loader {background:image-url('ajax-loader.gif') 50% 50% no-repeat;  width: 100px; height: 100px;}
+.arrow-position {width: 51px; height: 51px; position: relative;}
+.arrow {width: 51px; height: 51px; position: absolute; top:0; left:0; @include single-transition(opacity, 0.3s, ease);}
+.arrow-up {@include g-sprite('arrow-up'); }
+.arrow-down {@include g-sprite('arrow-down'); opacity:0;}
+.arrow-position:hover .arrow-up {opacity:0;}
+.arrow-position:hover .arrow-down {opacity:1;}

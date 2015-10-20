@@ -1,0 +1,11 @@
+/.powder
+/.ruby-version
+/.bundle
+/config/database.yml
+/config/apps.yml
+/log/*.log
+/tmp
+/public/system
+.DS_Store
+.sass-cache
+config/environments/development.rb
