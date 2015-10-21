@@ -2,7 +2,7 @@ ActiveAdmin.register Result do
   config.sort_order = "seconds_asc"
   config.filters = false
   actions :all, except: [ :new, :create, :edit ]
-  menu label: "Участники"
+  menu label: "Результаты"
 
 
   controller do

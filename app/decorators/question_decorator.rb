@@ -6,11 +6,4 @@ class QuestionDecorator < Draper::Decorator
     link_to_edit(:question)
   end
 
-  def options
-    h.simple_format model.options
-  end
-
-  def brand
-    model.brand.presence && "✔"
-  end
 end

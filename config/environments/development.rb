@@ -28,9 +28,9 @@ Lovestockholm::Application.configure do
   config.assets.debug = true
   
   # tmp dir for cache must be setup outside virtualbox shared folder for sass cached sprites to work
-  config.assets.configure do |env|
-    env.cache = ActiveSupport::Cache::FileStore.new('/mnt/tmp')
-  end
+  # config.assets.configure do |env|
+  #   env.cache = ActiveSupport::Cache::FileStore.new('/mnt/tmp')
+  # end
 
   Rails.configuration.ga_id = 'UA-69088337-1'
   Rails.configuration.vk_id = '5114153'

@@ -1,0 +1,12 @@
+<%
+  delete = true unless local_assigns.include?(:delete)
+  back_url ||= resource.persisted? ? smart_resource_url : smart_collection_url
+  if resource.persisted?
+    delete_url ||= resource_path
+  end
+%>
+
+<div class="b-form-buttons">
+  <%= f.submit "Сохранить", :class => 'submit' %> или <%= link_to "отменить", back_url %>
+  <%= link_to("Удалить", delete_url, :method => :delete, :confirm => 'Действительно удалить?', :class => 'button button-delete') if !f.object.new_record? && delete %>
+</div>

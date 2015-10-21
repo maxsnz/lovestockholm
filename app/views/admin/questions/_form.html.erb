@@ -1,6 +1,21 @@
 <%= simple_form_for [:admin, resource] do |f| %>
-  <%= f.input :question %>
-  <%= f.input :options %>
-  <%= f.input :brand %>
+  <%= f.input :title %>
+
+
+  <%= f.select(:kind, [['simple', 'simple'], ['images', 'images'], ['order', 'order']]) %>
+
+  <%= f.input :picture %>
+
+  <%= f.input :option_1 %>
+  <%= f.input :option_2 %>
+  <%= f.input :option_3 %>
+  <%= f.input :option_4 %>
+
+  <%= f.input :pictute_1 %>
+  <%= f.input :pictute_2 %>
+  <%= f.input :pictute_3 %>
+  <%= f.input :pictute_4 %>
+
+  <%= f.input :correct %>
   <%= render "_/buttons", f: f %>
 <% end %>

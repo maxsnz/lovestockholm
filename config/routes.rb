@@ -14,6 +14,9 @@ Lovestockholm::Application.routes.draw do
         get :winners
       end
     end
+    resources :players, only: [:index, :create, :update] do
+      
+    end
   end
 
   ActiveAdmin.routes(self)
