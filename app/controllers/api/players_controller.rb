@@ -2,8 +2,6 @@ class Api::PlayersController < Api::BaseController
   def create
     player = Player.find_or_initialize_by(uid: extract_uid)
     player.name = params[:name]
-    player.email = params[:email]
-    player.provider = params[:provider]
     player.picture = params[:picture]
 
     if player.persisted?
