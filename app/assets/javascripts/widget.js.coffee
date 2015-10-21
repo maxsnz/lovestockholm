@@ -14,7 +14,6 @@ sendAuth = (data) =>
       name: data.name
       email: data.email
       picture: data.photo
-      provider: data.provider
     }
     success: (data) =>
       console.log data
