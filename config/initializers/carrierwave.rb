@@ -5,11 +5,13 @@ CarrierWave.configure do |config|
   config.ftp_user = "maxsnz_lovestockholm"
   config.ftp_passwd = "PV/bL3Ra"
   config.ftp_folder = ""
-  config.ftp_url = "http://ccmbr.ru/uploads/lovestockholm/"
+  config.ftp_url = "http://ccmbr.ru/uploads/lovestockholm"
   config.ftp_passive = true # false by default
 
   config.enable_processing = false if Rails.env.test?
   config.cache_dir = 'system/tmp'
+
+  config.remove_previously_stored_files_after_update = false
 end
 
 module CarrierWave

@@ -5,7 +5,7 @@ class BaseUploader < CarrierWave::Uploader::Base
   process quality: 90
   process resize_to_fit: [600, 600]
 
-def extension_white_list
+  def extension_white_list
     %w(jpg jpeg gif png)
   end
 
