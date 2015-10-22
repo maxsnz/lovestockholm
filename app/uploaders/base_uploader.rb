@@ -3,7 +3,7 @@ class BaseUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   process quality: 90
-  process resize_to_fit: [600, 600]
+  process resize_to_limit: [ 290, -1 ]
 
   def extension_white_list
     %w(jpg jpeg gif png)

@@ -6,4 +6,8 @@ class QuestionDecorator < Draper::Decorator
     link_to_edit(:question)
   end
 
+  def picture
+    image_tag(:picture)
+  end
+
 end

@@ -10,7 +10,7 @@
 
   <div class="form-part">
     <%= f.input :picture, :hint => f.object.picture.present? \
-      ? f.template.image_tag(f.object.picture.pic.url)
+      ? f.template.image_tag(f.object.picture.url)
       : f.template.content_tag(:span, "картинка еще не загружена") %>
 
     <%= f.check_box :remove_picture %> Удалить картинку
