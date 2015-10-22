@@ -20,6 +20,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'sprockets-media_query_combiner'
 
 gem 'puma'
+gem 'carrierwave-ftp', :require => 'carrierwave/storage/ftp'
+gem 'mini_magick'
 
 
 

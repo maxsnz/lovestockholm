@@ -1,6 +1,7 @@
 class Question < ActiveRecord::Base
   # CORRECT_MARK = /^\*\s*/
   has_many :answers
+  include HasPreviews
 
   # validates_presence_of :question, :options
   # validates_format_of :options, with: CORRECT_MARK, multiline: true

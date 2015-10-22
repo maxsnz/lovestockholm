@@ -1,3 +1,21 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
+label.control-label {
+  padding-right: 10px;
+}
+
+.option-picture {display: none;     padding: 5px 0 0;}
+.option-picture .hint {padding: 5px 0 0;}
+.option-picture .hint img {width:50px; height:50px; border-radius:50%;}
+
+
+.form-part {
+  margin-bottom: 20px;
+  border:1px solid #eee;
+  border-radius:5px;
+  padding:10px;
+}
+
+#question_option1, #question_option2, #question_option3, #question_option4 {width:50%;}
+#question_correct {width:100px;}

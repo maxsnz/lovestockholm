@@ -1,21 +1,60 @@
 <%= simple_form_for [:admin, resource] do |f| %>
-  <%= f.input :title %>
+  <div class="form-part">
+    <%= f.input :title %>
+  </div>
 
+  <div class="form-part">
+    <label class="string optional control-label" for="question_kind">Тип вопроса</label>
+    <%= f.select(:kind, [['simple', 'simple'], ['images', 'images'], ['order', 'order']]) %>
+  </div>
 
-  <%= f.select(:kind, [['simple', 'simple'], ['images', 'images'], ['order', 'order']]) %>
+  <div class="form-part">
+    <%= f.input :picture, :hint => f.object.picture.present? \
+      ? f.template.image_tag(f.object.picture.pic.url)
+      : f.template.content_tag(:span, "картинка еще не загружена") %>
 
-  <%= f.input :picture %>
+    <%= f.check_box :remove_picture %> Удалить картинку
+  </div>
 
-  <%= f.input :option_1 %>
-  <%= f.input :option_2 %>
-  <%= f.input :option_3 %>
-  <%= f.input :option_4 %>
+  <div class="form-part">
+    <%= f.input :option1 %>
+    <div class="option-picture">
+    <%= f.input :picture1, :hint => f.object.picture1.present? \
+      ? f.template.image_tag(f.object.picture1.pic.url)
+      : f.template.content_tag(:span, "картинка еще не загружена") %>
+    </div>
+  </div>
 
-  <%= f.input :pictute_1 %>
-  <%= f.input :pictute_2 %>
-  <%= f.input :pictute_3 %>
-  <%= f.input :pictute_4 %>
+  <div class="form-part">
+    <%= f.input :option2 %>
+    <div class="option-picture">
+    <%= f.input :picture2, :hint => f.object.picture2.present? \
+      ? f.template.image_tag(f.object.picture2.pic.url)
+      : f.template.content_tag(:span, "картинка еще не загружена") %>
+    </div>
+  </div>
 
-  <%= f.input :correct %>
+  <div class="form-part">
+    <%= f.input :option3 %>
+    <div class="option-picture">
+    <%= f.input :picture3, :hint => f.object.picture3.present? \
+      ? f.template.image_tag(f.object.picture3.pic.url)
+      : f.template.content_tag(:span, "картинка еще не загружена") %>
+    </div>
+  </div>
+
+  <div class="form-part">
+    <%= f.input :option4 %>
+    <div class="option-picture">
+    <%= f.input :picture4, :hint => f.object.picture4.present? \
+      ? f.template.image_tag(f.object.picture4.pic.url)
+      : f.template.content_tag(:span, "картинка еще не загружена") %>
+    </div>
+  </div>
+
+  
+  <div class="form-part">
+    <%= f.input :correct %>
+  </div>
   <%= render "_/buttons", f: f %>
 <% end %>

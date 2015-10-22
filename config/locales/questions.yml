@@ -22,9 +22,18 @@ ru:
 
     attributes:
       question:
-        question: Вопрос
-        options: Варианты ответов
-        brand: Про бренд
+        title: Вопрос
+        kind: Тип вопроса
+        option1: Ответ 1
+        option2: Ответ 2
+        option3: Ответ 3
+        option4: Ответ 4
+        picture: Картинка вопроса
+        picture1:  Картинка ответа 1
+        picture2:  Картинка ответа 2
+        picture3:  Картинка ответа 3
+        picture4:  Картинка ответа 4
+        correct: Верный ответ
       result:
         player: Участник
         seconds: Результат

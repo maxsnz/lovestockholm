@@ -1,7 +1,7 @@
 ActiveAdmin.register Question do
   config.sort_order = "id_asc"
   config.filters = false
-  permit_params :title, :kind, :picture, :option_1, :option_2, :option_3, :option_4, :pictute_1, :pictute_2, :pictute_3, :pictute_4, :correct 
+  permit_params :title, :kind, :picture, :option1, :option2, :option3, :option4, :picture1, :picture2, :picture3, :picture4, :correct, :remove_picture
 
   index do
 

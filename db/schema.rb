@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021144838) do
+ActiveRecord::Schema.define(version: 20151022144837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,14 +31,14 @@ ActiveRecord::Schema.define(version: 20151021144838) do
     t.string   "title",                         null: false
     t.string   "kind",       default: "simple", null: false
     t.string   "picture"
-    t.string   "option_1"
-    t.string   "option_2"
-    t.string   "option_3"
-    t.string   "option_4"
-    t.string   "pictute_1"
-    t.string   "pictute_2"
-    t.string   "pictute_3"
-    t.string   "pictute_4"
+    t.string   "option1"
+    t.string   "option2"
+    t.string   "option3"
+    t.string   "option4"
+    t.string   "picture1"
+    t.string   "picture2"
+    t.string   "picture3"
+    t.string   "picture4"
     t.integer  "correct"
     t.datetime "created_at"
     t.datetime "updated_at"
