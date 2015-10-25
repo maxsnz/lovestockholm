@@ -20,8 +20,16 @@ class Question < ActiveRecord::Base
 
   def as_json(options = {})
     {
-      # question: question,
-      # options: formatted_options
+      kind: kind,
+      picture: picture,
+      question: title,
+      options: [
+        {text: option1, image: picture1},
+        {text: option2, image: picture2},
+        {text: option3, image: picture3},
+        {text: option4, image: picture4}
+      ]
     }
+    
   end
 end

@@ -1,15 +1,14 @@
 class Api::ResultsController < Api::BaseController
   def create
     player = Player.find_or_initialize_by(uid: extract_uid)
-    player.name = params[:name]
-    player.email = params[:email]
 
     result = BuildResultForPlayer.call(player)
 
-    if result.persisted?
-      result.correct_answers = CollectRandomQuestions::LIMIT
-      render_result(result)
-    elsif result.save
+    # if result.persisted?
+    #   result.correct_answers = CollectRandomQuestions::LIMIT
+    #   render_result(result)
+    # els
+    if result.save
       render_json({id: result.id, questions: result.questions.sort_by(&:id)})
     else
       json = {id: nil, errors: result.errors.as_json}.to_json.gsub(/player\./, '')
@@ -21,18 +20,26 @@ class Api::ResultsController < Api::BaseController
     result = Result.with_state(Result::PENDING).joins(:player).where(players: {uid: extract_uid}, id: params[:id]).first
 
     if result
-      UpdateResult.call(result, params[:answers])
+      UpdateResult.call(result, params[:answers], params[:bonus])
       render_result(result)
+      player = Player.all.where(uid:extract_uid)[0]
+      update_player_score(player)
     else
       render_json({error: "not found"}, status: 422)
     end
   end
 
-  def publish
-    result = Result.with_state(Result::CORRECT).joins(:player).where(players: {uid: extract_uid}, id: params[:id]).first
-
-    render_json({ok: !!(result && result.publish)})
+  def update_player_score(player)
+    score = player.results.where(:state => Result::DONE).sum(:score)
+    player.score = score
+    player.save
   end
+
+  # def publish
+  #   result = Result.with_state(Result::CORRECT).joins(:player).where(players: {uid: extract_uid}, id: params[:id]).first
+
+  #   render_json({ok: !!(result && result.publish)})
+  # end
 
   def index
     render_results Result.board
@@ -42,14 +49,10 @@ class Api::ResultsController < Api::BaseController
     render_results Result.board
   end
 
-  def winners
-    render_json Result.winners.sort_by(&:n)
-  end
-
   private
 
   def render_result(result)
-    render_json({id: result.id, state: result.state, correct_answers: result.correct_answers, seconds: result.seconds})
+    render_json({id: result.id, state: result.state, score: result.score})
   end
 
   def extract_uid

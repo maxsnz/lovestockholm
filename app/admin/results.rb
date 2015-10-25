@@ -9,8 +9,7 @@ ActiveAdmin.register Result do
 
     def scoped_collection
       # Result.all.where(state: 'correct')
-      # Result.winners
-      Result.with_state(Result::PUBLISHED).includes :player
+      Result.with_state(Result::DONE).includes :player
       # Result.all
     end
   end
@@ -19,7 +18,7 @@ ActiveAdmin.register Result do
   index do
     # column :n, sortable: true
 
-    {player: 'players.name', email:false, seconds: :seconds, created_at: :created_at}.each do |name, sortable|
+    {player: 'players.name', score: :score, seconds: :seconds, created_at: :created_at}.each do |name, sortable|
       column(name, sortable: sortable) do |model|
         ResultDecorator.new(model).send(name)
       end

@@ -1,23 +1,55 @@
-@import "compass/css3";
+@import "_/base";
 
-// $g-layout: smart; 
-$g-spacing: 10px;
-$g-sprite-dimensions: true;
-@import "g/*.png"; 
-@include all-g-sprites;
 
-body {
-  color:#fff;
-  background: #000;
+
+.loader {position:absolute; top:0; z-index:100; background-color:rgba(255,255,255,0.4);  width:100%; height: 100%;}
+
+.logo-big {@include g-sprite('logo-big');}
+.logo-black {@include g-sprite('logo-black'); margin:0px auto;}
+
+.screens {position: relative; width:100%; width:100wv; height:$height; }
+.screen {
+  display: none;
+  width:100%; height:100%; position: absolute; top:0;
+  background-position: 50% 0; background-repeat: no-repeat;
+  background-image: image-url('bg2.jpg');
+}
+.screen-inner {width:1022px; height:100%; margin:0px auto; position: relative;}
+.popup {
+  display: none;
+  width:100%; height:100%; position: absolute; top:0;
 }
 
-.loader {margin:0px auto; background:image-url('ajax-loader.gif') 50% 50% no-repeat;  width: 100px; height: 100px;}
-.arrow-position {margin:0px auto; width: 51px; height: 51px; position: relative;}
-.arrow {width: 51px; height: 51px; position: absolute; top:0; left:0; @include single-transition(opacity, 0.3s, ease);}
-.arrow-up {@include g-sprite('arrow-up'); }
-.arrow-down {@include g-sprite('arrow-down'); opacity:0;}
-.arrow-position:hover .arrow-up {opacity:0;}
-.arrow-position:hover .arrow-down {opacity:1;}
+.menu {position: absolute; bottom:60px; left:0;}
+.menu-item {
+  display:inline-block; margin-right: 36px; color:#000; text-decoration: none;
+  font:18px/24px $regular;
+  &.active {color:#fff;}
+}
 
-.auth-position {text-align: center; margin:20px auto;}
-.button {width:50px; height:50px; text-align: center; line-height: 50px; background: #fff; color:#000; cursor: pointer; display: inline-block;}
+.checkyourself {
+  text-align: center; background: #fff; color:#000; 
+  font:18px/36px $regular;
+  margin:0px auto; display: inline-block;
+  padding:0 27px;
+  position: absolute;
+  bottom: 54px;
+  left: 50%;
+  margin-left: -82px;
+  text-decoration: none;
+}
+
+.screen_main {
+
+  background-image: image-url('bg1.jpg');
+  .content_position {
+    text-align:center; padding-top: 75px; 
+  }
+  h3 {color:$yellow; font:36px/42px $bold;}
+  h4 {font:26px/36px $regular;}
+  .logo-big {margin:0px auto;}
+}
+
+.popup_test {
+  background: $blue;
+}

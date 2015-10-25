@@ -3,19 +3,17 @@ class Result < ActiveRecord::Base
 
   self.per_page = 200
 
-  belongs_to :player, autosave: true
+  belongs_to :player#, autosave: true
   # belongs_to foreign_key: :n, primary_key: :n #TODO
   has_and_belongs_to_many :questions
 
   PENDING   = 'pending'
-  CORRECT   = 'correct'
-  WRONG     = 'wrong'
-  PUBLISHED = 'published'
+  DONE   = 'done'
+  REJECT     = 'reject'
 
   TRANSITIONS = {
-    answer_correctly: [PENDING, CORRECT],
-    answer_incorrectly: [PENDING, WRONG],
-    publish: [CORRECT, PUBLISHED]
+    answer_correctly: [PENDING, DONE],
+    answer_reject: [PENDING, REJECT]
   }
 
   state_machine initial: PENDING do
@@ -29,23 +27,24 @@ class Result < ActiveRecord::Base
   validates_presence_of :questions, :player
   validates_associated :player
 
-  validate :ensure_player_has_not_played_already
+  # это не надо проверять
+  # validate :ensure_player_has_not_played_already
 
-  scope :board, -> { with_state(PUBLISHED).order(:seconds).preload(:player) }
-  scope :winners, -> { board.select("n, player_id, MIN(seconds) as seconds, updated_at").group(:n) }
-
+  # это про победителей
+  scope :board, -> { with_state(DONE).order(:score).preload(:player) }
+  
   def as_json(options = {})
     {
       name: player.name,
       seconds: seconds,
       date: I18n.l(updated_at, format: :list)
-    }.merge(options[:place] ? { place: options[:place] } : { n: n })
+    }.merge(options[:place] ? { place: options[:place] } : { score: score })
   end
 
   private
 
 
-  def ensure_player_has_not_played_already
-    errors.add(:player_id, :taken) if Result.with_state(PUBLISHED).where(player_id: player_id).exists?
-  end
+  # def ensure_player_has_not_played_already
+  #   errors.add(:player_id, :taken) if Result.with_state(PUBLISHED).where(player_id: player_id).exists?
+  # end
 end

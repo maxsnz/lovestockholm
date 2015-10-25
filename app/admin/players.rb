@@ -4,7 +4,15 @@ ActiveAdmin.register Player do
   actions :all, except: [ :new, :create, :edit ]
   menu label: "Участники"
 
+  index do
+    # column :n, sortable: true
 
+    {player: :name, score: :score, attempts: false, picture: false}.each do |name, sortable|
+      column(name, sortable: sortable) do |model|
+        PlayerDecorator.new(model).send(name)
+      end
+    end
+  end
 
 
   controller do

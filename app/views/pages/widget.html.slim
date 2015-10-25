@@ -10,15 +10,23 @@ html
     = render "_/google_analytics"
 
   body
+    .screens
+      .screen.screen_main 
+        = render :partial => "_/screen_main", layout: 'screen'
+      .screen.screen_about
+        = render :partial =>  "_/screen_about", layout: 'screen'
+      .screen.screen_rating
+        = render :partial =>  "_/screen_rating", layout: 'screen'
+      .screen.screen_prizes
+        = render :partial =>  "_/screen_prizes", layout: 'screen'
+      .screen.screen_rules
+        = render :partial =>  "_/screen_rules", layout: 'screen'
+      .screen.screen_test
+        = render :partial =>  "_/screen_test", layout: 'screen'
+    .popup.popup_test
+       = render :partial =>  "_/popup_test"
+    .loader 
 
-    p widget.html.slim
-    .loader
-    .arrow-position
-      .arrow.arrow-up
-      .arrow.arrow-down
-    .auth-position
-      .button.auth-button data-provider="vk" vk
-      .button.auth-button data-provider="fb" fb
 
     = render :partial => '_/sharing_includes'
     = javascript_include_tag "widget" 

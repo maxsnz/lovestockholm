@@ -8,14 +8,17 @@ Lovestockholm::Application.routes.draw do
       member do
         post :publish
       end
-
       collection do
         get :all
-        get :winners
       end
     end
     resources :players, only: [:index, :create, :update] do
-      
+      member do
+        get :show
+      end
+      collection do
+        get :all
+      end
     end
   end
 

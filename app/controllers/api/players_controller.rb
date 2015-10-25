@@ -12,19 +12,25 @@ class Api::PlayersController < Api::BaseController
       json = {id: nil, errors: player.errors.as_json}.to_json.gsub(/player\./, '')
       render_json(json, status: 422)
     end
+  end
 
-    #TODO
-    # result = BuildResultForPlayer.call(player)
+  def index
+    render_players Player.all
+  end
 
-    # if result.persisted?
-    #   result.correct_answers = CollectRandomQuestions::LIMIT
-    #   render_result(result)
-    # elsif result.save
-    #   render_json({id: result.id, questions: result.questions.sort_by(&:id)})
-    # else
-    #   json = {id: nil, errors: result.errors.as_json}.to_json.gsub(/player\./, '')
-    #   render_json(json, status: 422)
-    # end
+  def render_players(scope)
+    paginated = scope.paginate(page: params[:page])
+    players = paginated.each_with_index.map { |r, i| r.as_json(place: paginated.offset + i + 1) }
+
+    render_json({
+      players: players,
+      total_pages: paginated.total_pages
+    })
+  end
+
+  def show
+    player = Player.find(params[:id])
+    render_json({score: player.score, picture: player.picture, name: player.name})
   end
 
   def extract_uid

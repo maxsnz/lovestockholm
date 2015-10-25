@@ -44,6 +44,23 @@ ActiveRecord::Schema.define(version: 20151022144837) do
     t.datetime "updated_at"
   end
 
+  create_table "questions_results", id: false, force: :cascade do |t|
+    t.integer "question_id", null: false
+    t.integer "result_id",   null: false
+  end
+
+  add_index "questions_results", ["question_id", "result_id"], name: "index_questions_results_on_question_id_and_result_id", unique: true, using: :btree
+
+  create_table "results", force: :cascade do |t|
+    t.integer  "player_id",                                         null: false
+    t.string   "state",                                             null: false
+    t.decimal  "seconds",    precision: 12, scale: 2, default: 0.0, null: false
+    t.decimal  "start",      precision: 12, scale: 2,               null: false
+    t.integer  "score",                                             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tokens", force: :cascade do |t|
     t.string   "uid",        null: false
     t.string   "token",      null: false

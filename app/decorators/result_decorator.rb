@@ -14,12 +14,12 @@ class ResultDecorator < Draper::Decorator
     h.link_to Player.find(model.player_id).name, url, :target => "_blank"
   end
 
-  def email
-    h.link_to Player.find(model.player_id).email, 'mailto:'+ Player.find(model.player_id).email
-  end
 
   def seconds
     model.seconds
+  end
+  def score
+    model.score
   end
   def created_at
     model.created_at.strftime("%d.%m.%Y  %H:%M ")
