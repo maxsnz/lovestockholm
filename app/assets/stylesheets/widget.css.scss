@@ -44,10 +44,29 @@
   background-image: image-url('bg1.jpg');
   .content_position {
     text-align:center; padding-top: 75px; 
-  }
+  } 
   h3 {color:$yellow; font:36px/42px $bold;}
   h4 {font:26px/36px $regular;}
   .logo-big {margin:0px auto;}
+}
+
+.screen_test {
+
+  .instruction {
+    text-align: center; margin-top: 90px; margin-bottom: 35px;
+    .column {display: inline-block; width:250px;}
+    .label {font:18px/57px $bold;}
+    .icon {margin:0px auto;}
+    .icon_1 {@include g-sprite('test-icon_1');}
+    .icon_2 {@include g-sprite('test-icon_2');}
+    .icon_3 {@include g-sprite('test-icon_3');}
+  }
+  .auth-position {
+    h3 {font:36px/36px $bold;}
+  }
+  .auth-button {margin: 20px 25px; cursor: pointer;}
+  .auth-button-fb {@include g-sprite('auth-vk');}
+  .auth-button-vk {@include g-sprite('auth-vk');}
 }
 
 .popup_test {

@@ -10,10 +10,18 @@
   .column
     .icon.icon_3
     .label Сражайся за призы
-.auth-position
-  .button.auth-button data-provider="vk" vk
-  .button.auth-button data-provider="fb" fb
-.start-position style="display:none;"
-  .button.start-button Старт
+  .auth-position
+    .state-dependable.state data-state="anonymous" data-controller="testStateCtrl"
+      h3 Авторизируйся <br>для участия в конкурсе
+      .auth-position
+        .auth-button.auth-button-fb
+        .auth-button.auth-button-vk
+    .state-dependable data-state="authorized" data-controller="testStateCtrl" style="display:none;"
+      .start-position
+        .button.start-button Старт
+    .state-dependable data-state="started" data-controller="testStateCtrl" style="display:none;"
+      .timer-position
+
+
 .answer-position style="display:none;"
   .button.answer-button готово
