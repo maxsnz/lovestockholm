@@ -83,4 +83,6 @@ Lovestockholm::Application.configure do
   Rails.configuration.vk_secret = 'zFSiKaZg0PXMDaFKUMyH'
   Rails.configuration.fb_id = '1721977504688790'
   Rails.configuration.fb_secret = 'bcdbbb4f96b796dca7da2a8582c28d0a'
+
+  config.react.variant = :production
 end

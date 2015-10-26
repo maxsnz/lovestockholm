@@ -19,10 +19,11 @@ ActiveRecord::Schema.define(version: 20151022144837) do
   create_table "players", force: :cascade do |t|
     t.string   "uid",                    null: false
     t.string   "name"
+    t.string   "email"
+    t.integer  "score",      default: 0, null: false
     t.string   "picture"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "score",      default: 0, null: false
   end
 
   add_index "players", ["uid"], name: "index_players_on_uid", unique: true, using: :btree

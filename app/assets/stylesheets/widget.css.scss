@@ -2,6 +2,7 @@
 
 
 
+
 .loader {position:absolute; top:0; z-index:100; background-color:rgba(255,255,255,0.4);  width:100%; height: 100%;}
 
 .logo-big {@include g-sprite('logo-big');}
@@ -72,3 +73,5 @@
 .popup_test {
   background: $blue;
 }
+
+@import "_/test";

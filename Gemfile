@@ -23,6 +23,8 @@ gem 'puma'
 gem 'carrierwave-ftp', :require => 'carrierwave/storage/ftp'
 gem 'mini_magick'
 
+gem 'react-rails', '~> 1.4.0'
+
 
 
 group :development do
