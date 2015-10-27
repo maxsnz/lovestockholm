@@ -12,17 +12,17 @@ html
   body
     .screens
       .screen.screen_main 
-        = render :partial => "_/screen_main", layout: 'screen'
+        = render :partial =>  "_/screen_main",   layout: 'screen'
       .screen.screen_about
-        = render :partial =>  "_/screen_about", layout: 'screen'
+        = render :partial =>  "_/screen_about",  layout: 'screen'
       .screen.screen_rating
         = render :partial =>  "_/screen_rating", layout: 'screen'
       .screen.screen_prizes
         = render :partial =>  "_/screen_prizes", layout: 'screen'
       .screen.screen_rules
-        = render :partial =>  "_/screen_rules", layout: 'screen'
+        = render :partial =>  "_/screen_rules",  layout: 'screen'
       .screen.screen_test
-        = render :partial =>  "_/screen_test", layout: 'screen'
+        = render :partial =>  "_/screen_test",   layout: 'screen'
       .screen.screen_react
         = render :partial =>  "_/test_react"
     .popup.popup_test
@@ -31,4 +31,5 @@ html
 
 
     = render :partial => '_/sharing_includes'
+    = render '_/tmpls'
     = javascript_include_tag "widget" 

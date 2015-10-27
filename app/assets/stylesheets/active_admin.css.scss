@@ -1,5 +1,7 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
+@import "_/mixins";
+@import "_/vars";
 
 label.control-label {
   padding-right: 10px;
@@ -19,3 +21,18 @@ label.control-label {
 
 #question_option1, #question_option2, #question_option3, #question_option4 {width:50%;}
 #question_correct {width:100px;}
+
+.popup_test {
+  width:100%; height:$height; background: $blue;
+  font: 11px/11px $regular;
+  -webkit-font-smoothing:antialiased;
+  color:#fff;
+  background: #fff;
+}
+.popup-inner {width:1022px; height:$height; margin:0px auto;}
+
+th.col.col-picture {font-size:0;}
+td.col.col-picture {padding:0;}
+td.col.col-picture img {height: 36px;display: block;}
+
+@import "_/test";

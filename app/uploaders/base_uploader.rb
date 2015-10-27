@@ -2,11 +2,11 @@ class BaseUploader < CarrierWave::Uploader::Base
   storage :ftp
   include CarrierWave::MiniMagick
 
-  process quality: 90
+  process quality: 80
   process resize_to_limit: [ 290, -1 ]
 
   def extension_white_list
-    %w(jpg jpeg gif png)
+    %w(jpg jpeg)
   end
 
   def store_dir

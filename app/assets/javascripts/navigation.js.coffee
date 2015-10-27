@@ -24,17 +24,17 @@ class Navigation
     currentScreen = newScreen
 
 
-  openPopup = (popup, callback) ->
-    $('.popup-'+popup).fadeIn()
+  @openPopup = (popup, callback) ->
+    $('.popup_'+popup).fadeIn()
     callback() if typeof callback is "function"
 
-  closePopup = (popup, callback) ->
-    $('.popup-'+popup).fadeOut()
+  @closePopup = (popup, callback) ->
+    $('.popup_'+popup).fadeOut()
     callback() if typeof callback is "function"
 
   popupContoller = (params, targetElement) ->
-    openPopup(params.popup) if params.action is 'open'
-    closePopup(params.popup) if params.action is 'close'
+    @openPopup(params.popup) if params.action is 'open'
+    @closePopup(params.popup) if params.action is 'close'
 
   shareController = (params, targetElement) ->
     url = 'http://specials.lookatme.ru/theartistisyou'

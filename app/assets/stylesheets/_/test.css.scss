@@ -8,3 +8,76 @@
   padding: 20px;
   line-height: 24px;
 }
+
+.popup_test {
+  background: $blue;
+}
+
+
+
+.question_container {
+
+  .question {padding-top:45px; position: relative; height: 515px;}
+  .question_timer {font:26px/27px $extrabold; color:$yellow; @include g-sprite('timer-waves'); text-align: center; margin:0px auto 70px;}
+  .question-question {font:26px/36px $bold;width: 840px; margin: 0px auto 45px; text-align: center;} 
+  .question-options {}
+  .question-option {font:18px/34px $regular;cursor: pointer;}
+  .question .next { 
+    display: none;
+    @include g-sprite('next'); cursor: pointer;
+    position: absolute; bottom:77px; right:0;
+  }
+  .question.choosed .next {display: block;}
+  .question.choosed .question-option {color:#848d8f;}
+}
+
+
+.question-type-simple {
+  .questions-options-row {display: table-row; }
+  .questions-options-cell {display: table-cell;padding-top: 55px;}
+  .question-question {} 
+  .question-options {
+    text-align:left; display: table;
+    width: 840px;
+    position: relative;
+    left: 150px;
+  }  
+  .question-option {
+    padding:0 15px;
+    border:1px solid transparent;
+    display: inline-block;
+    &:hover {border:1px solid #fff;}
+  }
+  &.choosed .question-option.active {color:#fff; border:1px solid #fff;}
+}
+
+.question-type-simple_image {
+  .question-image {float:left; width:50%;     padding-left: 10%;}
+  .question-options {float:left; width:40%;}
+  .questions-options-row {margin-bottom: 25px;}
+  .question-option {
+    padding:0 15px; 
+    border:1px solid transparent;
+    display: inline-block;
+    &:hover {border:1px solid #fff;}
+  }
+  &.choosed .question-option.active {color:#fff; border:1px solid #fff;}
+}
+
+.question-type-images {
+  .question-option {display: inline-block; width:250px; text-align: center;}
+  .question-option-picture {
+    width: 155px; height: 155px; border-radius:50%;
+    border:1px solid #fff; margin: 0px auto 30px;
+  }
+  .question-option-text {display: inline-block; padding: 0 15px; border:1px solid transparent;}
+  .question-option:hover .question-option-text {border:1px solid #fff;}
+  &.choosed .question-option-picture {opacity:0.4;}
+  &.choosed .question-option.active .question-option-picture {opacity:1;}
+  &.choosed .question-option.active .question-option-text {color:#fff; border:1px solid #fff;}
+}
+
+
+.question-type-order {
+
+}

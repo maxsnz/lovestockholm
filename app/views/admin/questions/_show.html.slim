@@ -1,0 +1,12 @@
+css:
+  #active_admin_content {padding:30px 0;}
+
+.popup_test
+  .popup-inner
+    .question_container
+
+= render '_/tmpls'
+
+javascript:
+  obj = #{raw(resource.to_json)};
+  render_question(obj, '#{resource.correct}');

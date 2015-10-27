@@ -7,6 +7,12 @@ ActiveAdmin.register Question do
 
     selectable_column
     column :title
+    {picture: false}.each do |name, sortable|
+      column(name, sortable: sortable) do |model|
+        QuestionDecorator.new(model).send(name)
+      end
+    end
+
     column :kind
     actions
     
@@ -18,4 +24,9 @@ ActiveAdmin.register Question do
   # controller do
   #   include PermitConcern, NoShowConcern
   # end
+
+
+  show do
+    render partial: 'show'
+  end
 end

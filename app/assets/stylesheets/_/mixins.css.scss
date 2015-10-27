@@ -64,6 +64,10 @@
   }
 }
 
+@include keyframes(play_timer) {
+  100% { background-position: 0 -832px; }
+}
+
 @mixin bgp ($x, $y) {
   // background-position: #{$x}px #{$y}px;
   @include transform(translate(#{$x}px, #{$y}px));

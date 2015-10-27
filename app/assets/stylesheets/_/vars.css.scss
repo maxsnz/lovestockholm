@@ -1,0 +1,35 @@
+$default-transition-duration: .3s;
+
+
+$width:1300px;
+$height:560px;
+
+$blue: #1f62a2;
+$darkblue: 074987; 
+$red: #e4113e;
+$black: #323232;
+$yellow: #ffdd2d;
+
+// $g-layout: smart; 
+$g-spacing: 10px;
+$g-sprite-dimensions: true;
+@import "g/*.png"; 
+@include all-g-sprites;
+
+// $secv-spacing: 0px;
+// $secv-sprite-dimensions: true;
+// @import "secv/*.png"; 
+// @include all-secv-sprites;
+
+@include setfontface('circe_extralight');
+@include setfontface('circe_regular');
+@include setfontface('circe_bold');
+@include setfontface('circe_extrabold');
+$light: 'circe_extralight', Arial, sans-serif;
+$regular: 'circe_regular', Arial, sans-serif;
+$bold: 'circe_bold', Arial, sans-serif;
+$extrabold: 'circe_extrabold', Arial, sans-serif;
+
+.spacer_10 {width:100%; height:10px;}
+.spacer_20 {width:100%; height:20px;}
+.spacer_40 {width:100%; height:40px;}

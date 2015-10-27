@@ -2,12 +2,11 @@
 class QuestionDecorator < Draper::Decorator
   include LinkToEdit
 
-  def question
-    link_to_edit(:question)
+  def picture
+    if model.picture.length > 0
+      h.image_tag model.picture
+    end
   end
 
-  def picture
-    image_tag(:picture)
-  end
 
 end
