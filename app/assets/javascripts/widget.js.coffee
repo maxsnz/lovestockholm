@@ -3,6 +3,7 @@
 #=  components
 
 #= require jquery-2.1.4.min
+#= require jquery-ui.min
 #= require EventEmitter.min
 #= require lodash.compat.min
 #= require velocity.min

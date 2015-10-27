@@ -15,7 +15,7 @@
         </div>
       </div>
     <% } else if (kind == 'simple_image') { %>
-      <div class="question-image"><img src="<%= picture.picture.url %>"></div>
+      <div class="question-image"><img src="<%= picture.picture.url %>" /></div>
       <div class="question-options">
         <div class="questions-options-row"><div class="question-option">A. <%= options[0].text %></div></div>
         <div class="questions-options-row"><div class="question-option">B. <%= options[1].text %></div></div>
@@ -40,6 +40,27 @@
           <div class="question-option-picture" style="background-image:url(<%= options[3].image.picture4.pic.url %>);"></div>
           <div class="question-option-text">D. <%= options[3].text %></div>
         </div>
+      </div>
+    <% } else if (kind == 'order') { %>
+      <div class="question-options">
+        <ul class="question-options-container">
+          <li class="question-option">
+            <div class="question-option-n">1</div>
+            <div class="question-option-text"><%= options[0].text %></div>
+          </li>
+          <li class="question-option">
+            <div class="question-option-n">2</div>
+            <div class="question-option-text"><%= options[1].text %></div>
+          </li>
+          <li class="question-option">
+            <div class="question-option-n">3</div>
+            <div class="question-option-text"><%= options[2].text %></div>
+          </li>
+          <li class="question-option">
+            <div class="question-option-n">4</div>
+            <div class="question-option-text"><%= options[3].text %></div>
+          </li>
+        </ul>
       </div>
     <% } %>
     <div class="next"></div>
