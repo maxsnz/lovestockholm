@@ -18,6 +18,14 @@ class Question < ActiveRecord::Base
   #   options.lines.map.with_index.find{|line,| line =~ CORRECT_MARK}[1]
   # end
 
+  def next
+    self.class.where("id > ?", id).first
+  end
+
+  def previous
+    self.class.where("id < ?", id).last
+  end  
+
   def as_json(options = {})
     {
       kind: kind,

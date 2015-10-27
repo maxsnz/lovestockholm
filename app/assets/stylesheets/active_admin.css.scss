@@ -35,4 +35,11 @@ th.col.col-picture {font-size: 0;border-left: 0;box-shadow: none}
 td.col.col-picture {padding:0;}
 td.col.col-picture img {height: 36px;display: block;}
 
+.admin_question-bottom {
+  margin-top:10px; position: relative; 
+  a {position: absolute; font-size:20px; text-decoration: none;}
+  a.goprevious { left:10px;}
+  a.gonext { right:10px;}
+}
+
 @import "_/test";

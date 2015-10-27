@@ -5,6 +5,12 @@ css:
   .popup-inner
     .question_container
 
+.admin_question-bottom
+  - if resource.previous
+    a.goprevious href="/admin/questions/#{resource.previous.id}" ← сюда
+  - if resource.next
+    a.gonext href="/admin/questions/#{resource.next.id}" туда →
+
 = render '_/tmpls'
 
 javascript:
