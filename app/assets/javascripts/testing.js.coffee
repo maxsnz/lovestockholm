@@ -1,8 +1,63 @@
+Question = (obj, attempt) ->
+  @_data = obj
+  @_attempt = attempt
+  @_$question = undefined
+  @_$c = $('.question_container')
+  @_init()
+
+Question::_init = () ->
+  tmpl = _.template($('#tmpl_question').html())
+  if @_data.kind is 'simple'
+    @_data.kind = @_data.kind + '_image' if (@_data.picture.picture.url)
+
+  @_$question = $(tmpl(@_data)).appendTo(@_$c)
+  @_$question.data('context', @)
+
+  if @_data.kind is 'order'
+    $q = @_$question
+    @_$question.find( "ul" ).sortable
+      sort: (event, ui) ->
+        $q.addClass 'choosed'
+      update: (event, ui) ->
+        $n = $q.find('.next')
+        s = ''
+        $q.find('.question-option').each ->
+          s = s + $(@).attr('data-value') if $(@).attr('data-value')
+        ee.emitEvent('ui_QuestionCtrl', [{value:s, action:'dragorder'}, $(@) ])
+
+    @_$question.find( "ul" ).disableSelection()
+  else 
+    ee.addListener('ui_QuestionCtrl', @_questionController)
+
+Question::_questionController = (params, targetElement) ->
+  context = $(targetElement).closest('.question').data('context')
+  $q = context._$question
+  switch params.action
+    when 'choose'
+      $q.find('.question-option').removeClass 'active'
+      context._$question.find('.question-option[data-value="'+params.value+'"]').addClass 'active'
+      context._$question.find('.next').attr('data-value', params.value)
+      context._$question.addClass 'choosed'
+    when 'dragorder'
+      $q.find('.question-option').removeClass 'active'
+      context._$question.find('.next').attr('data-value', params.value)
+      context._$question.addClass 'choosed'
+    when 'next'
+      if params.value
+        context._attempt.answeredQuestion(params.value)
+
+
+Question::_choose = (value) ->
+
+Question::_answer = (value) ->
+  
+
 Attempt = (player) ->
   @_player = player
   @_questions = undefined
   @_id = undefined
   @_$c = $('.question_container')
+  @_answers = []
   @_init()
   
   return
@@ -14,10 +69,17 @@ Attempt::_init = () ->
   @_$c.html('')
   return
 
-Attempt::_renderQuestion = (question) ->
-  question_tmpl = _.template($('#tmpl_question').html())
-  console.log question
-  $question = $(question_tmpl(question)).appendTo(@_$c)
+Attempt::answeredQuestion = (value) ->
+  console.log value
+  @_answers.push({option:value, time: 50})
+  if @_answers.length < @_questions.length
+    @_$c.html('')
+    @_generateQuestion @_questions[@_answers.length]
+  else
+    @_sendAnswers()
+
+Attempt::_generateQuestion = (data) ->
+  question = new Question(data, @)
 
 
 Attempt::start = () ->
@@ -25,7 +87,7 @@ Attempt::start = () ->
   timer = setInterval (=>
     if @_questions.length > 0
       clearInterval(timer)
-      @_renderQuestion(@_questions[0])
+      @_generateQuestion(@_questions[0])
       Navigation.openPopup 'test', ->
         console.log 'test was started!!!'     
   ), 1000
@@ -34,29 +96,18 @@ Attempt::start = () ->
 Attempt::_stateAsString = ->
 
 Attempt::_sendAnswers = () ->
-  data = [
-    {option:1, time:50}
-    {option:1, time:50}
-    {option:1, time:50}
-    {option:1, time:50}
-    {option:1, time:50}
-    {option:1, time:50}
-    {option:1, time:50}
-    {option:1, time:50}
-    {option:1, time:50}
-  ]
   $.ajax 
     type: 'POST'
-    url: '/api/results/'+test.id
+    url: '/api/results/'+@_id
     data: {
       _method: 'put'
       user_id: @_player.id
       token: @_player.token
-      answers: JSON.stringify(data)
+      answers: JSON.stringify(@_answers)
       bonus: 50
     }
     success: (data) =>
-      console.log data     
+      @_showResult(data)
     error: (xhr, textStatus, error) ->
       console.log xhr.responseJSON
 
@@ -75,6 +126,13 @@ Attempt::_getQuestions = () ->
       
     error: (xhr, textStatus, error) ->
       console.log xhr.responseJSON
+
+Attempt::_showResult = (obj) ->
+  obj.player = @_player
+  console.log obj
+  tmpl = _.template($('#tmpl_result').html())
+  @_$c.html('')
+  $result = $(tmpl(obj)).appendTo(@_$c)
 
 
 class Testing

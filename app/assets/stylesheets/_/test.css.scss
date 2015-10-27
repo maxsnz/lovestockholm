@@ -16,7 +16,9 @@
 
 
 .question_container {
-
+  width: 1022px;
+  height: 560px;
+  margin: 0px auto;
   .question {padding-top:45px; position: relative; height: 515px;}
   .question_timer {font:26px/27px $extrabold; color:$yellow; @include g-sprite('timer-waves'); text-align: center; margin:0px auto 70px;}
   .question-question {font:26px/36px $bold;width: 840px; margin: 0px auto 45px; text-align: center;} 
@@ -65,12 +67,13 @@
 }
 
 .question-type-images {
+  // .question-options {text-align:center;}
   .question-option {display: inline-block; width:250px; text-align: center;}
   .question-option-picture {
     width: 155px; height: 155px; border-radius:50%;
     border:1px solid #fff; margin: 0px auto 30px;
   }
-  .question-option-text {display: inline-block; padding: 0 15px; border:1px solid transparent;}
+  .question-option-text {display: inline-block; vertical-align: top; padding: 0 15px; border:1px solid transparent;}
   .question-option:hover .question-option-text {border:1px solid #fff;}
   &.choosed .question-option-picture {opacity:0.4;}
   &.choosed .question-option.active .question-option-picture {opacity:1;}
@@ -91,10 +94,21 @@
   .question-option-text {
     color: #fff;
     line-height: 20px; 
-    padding-top: 30px;
+    height: 80px;
+    vertical-align: middle;
+    display: table-cell;
+    width: 110px;
   }
   .question-option-n {
     color: #fff; line-height: 16px;
   }
   .order-icon {@include g-sprite('order-icon'); margin: 40px auto;}
+}
+
+.result {
+  text-align: center;
+  padding-top: 50px;
+  p {font:18px/24px $regular;}
+  .score {font:40px/50px $bold;}
+  .pic {margin:40px auto;}
 }

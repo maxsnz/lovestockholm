@@ -1,3 +1,16 @@
+<script type="text/html" id="tmpl_result">
+  <div class="result">
+  <div class="spacer-40"></div>
+    <div class="pic"><img src="<%= player.photo %>" /></div>
+    <p>Твой результат</p>
+    <div class="score"><%= score %></div>
+    <div class="player-position loading">
+      <div class="player-score"></div>
+      <div class="player-place"></div>
+    </div>
+  </div>
+</script>
+
 <script type="text/html" id="tmpl_question">
   <div class="question question-type-<%= kind %>">
     <div class="question_timer">100</div>
@@ -6,37 +19,69 @@
     <% if (kind == 'simple') { %>
       <div class="question-options">
         <div class="questions-options-row">
-          <div class="questions-options-cell"><div class="question-option">A. <%= options[0].text %></div></div>
-          <div class="questions-options-cell"><div class="question-option">B. <%= options[1].text %></div></div>
+          <div class="questions-options-cell">
+            <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="1">
+              <span>A. <%= options[0].text %></span>
+            </div>
+          </div>
+          <div class="questions-options-cell">
+            <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="2">
+              <span>B. <%= options[1].text %></span>
+            </div>
+          </div>
         </div>
         <div class="questions-options-row">
-          <div class="questions-options-cell"><div class="question-option">C. <%= options[2].text %></div></div>
-          <div class="questions-options-cell"><div class="question-option">D. <%= options[3].text %></div></div>
+          <div class="questions-options-cell">
+            <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="3">
+              <span>C. <%= options[2].text %></span>
+            </div>
+          </div>
+          <div class="questions-options-cell">
+            <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="4">
+              <span>D. <%= options[3].text %></span>
+            </div>
+          </div>
         </div>
       </div>
     <% } else if (kind == 'simple_image') { %>
       <div class="question-image"><img src="<%= picture.picture.url %>" /></div>
       <div class="question-options">
-        <div class="questions-options-row"><div class="question-option">A. <%= options[0].text %></div></div>
-        <div class="questions-options-row"><div class="question-option">B. <%= options[1].text %></div></div>
-        <div class="questions-options-row"><div class="question-option">C. <%= options[2].text %></div></div>
-        <div class="questions-options-row"><div class="question-option">D. <%= options[3].text %></div></div>
+        <div class="questions-options-row">
+          <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="1">
+            <span>A. <%= options[0].text %></span>
+          </div>
+        </div>
+        <div class="questions-options-row">
+          <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="2">
+            <span>B. <%= options[1].text %></span>
+          </div>
+        </div>
+        <div class="questions-options-row">
+          <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="3">
+            <span>C. <%= options[2].text %></span>
+          </div>
+        </div>
+        <div class="questions-options-row">
+          <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="4">
+            <span>D. <%= options[3].text %></span>
+          </div>
+        </div>
       </div>
     <% } else if (kind == 'images') { %>
       <div class="question-options">
-        <div class="question-option">
+        <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="1">
           <div class="question-option-picture" style="background-image:url(<%= options[0].image.picture1.pic.url %>);"></div>
           <div class="question-option-text">A. <%= options[0].text %></div>
         </div>
-        <div class="question-option">
+        <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="2">
           <div class="question-option-picture" style="background-image:url(<%= options[1].image.picture2.pic.url %>);"></div>
           <div class="question-option-text">B. <%= options[1].text %></div>
         </div>
-        <div class="question-option">
+        <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="3">
           <div class="question-option-picture" style="background-image:url(<%= options[2].image.picture3.pic.url %>);"></div>
           <div class="question-option-text">C. <%= options[2].text %></div>
         </div>
-        <div class="question-option">
+        <div class="question-option ui-clickable" data-controller="QuestionCtrl" data-action="choose" data-value="4">
           <div class="question-option-picture" style="background-image:url(<%= options[3].image.picture4.pic.url %>);"></div>
           <div class="question-option-text">D. <%= options[3].text %></div>
         </div>
@@ -44,19 +89,19 @@
     <% } else if (kind == 'order') { %>
       <div class="question-options">
         <ul class="question-options-container">
-          <li class="question-option">
+          <li class="question-option" data-value="1">
             <div class="question-option-n">1</div>
             <div class="question-option-text"><%= options[0].text %></div>
           </li>
-          <li class="question-option">
+          <li class="question-option" data-value="2">
             <div class="question-option-n">2</div>
             <div class="question-option-text"><%= options[1].text %></div>
           </li>
-          <li class="question-option">
+          <li class="question-option" data-value="3">
             <div class="question-option-n">3</div>
             <div class="question-option-text"><%= options[2].text %></div>
           </li>
-          <li class="question-option">
+          <li class="question-option" data-value="4">
             <div class="question-option-n">4</div>
             <div class="question-option-text"><%= options[3].text %></div>
           </li>
@@ -64,6 +109,6 @@
       </div>
       <div class="order-icon"></div>
     <% } %>
-    <div class="next"></div>
+    <div class="next ui-clickable" data-controller="QuestionCtrl" data-action="next"> </div>
   </div>
 </script>
