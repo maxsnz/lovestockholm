@@ -24,7 +24,7 @@ window.initMap = ->
     return
 
   $('.calculate-button').click (e) ->
-    e.preventDefault()
+    e.preventDefault() 
     onChangeHandler() if $('.map-input').val().length > 0
   return
 
