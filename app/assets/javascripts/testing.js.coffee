@@ -23,7 +23,7 @@ Question::_init = () ->
     new_time = new Date()
     time = time - Math.round((new_time - old_time)/1000)
     old_time = new_time
-    console.log time
+    # console.log time
     if time < 0
       clearInterval(context._interval)
       ee.emitEvent('ui_QuestionCtrl', [{value:0, action:'timeout'}, $timer ])
@@ -165,67 +165,20 @@ class Rating
 window.Rating = Rating
 
 
-class Player  
-  @getPlayer = (uid, provider, callback) ->
-    console.log uid, provider
-    $.ajax 
-      type: 'GET'
-      url: '/api/players/'+provider+':'+uid
-      success: (data) =>
-        callback(data)
-        return
-      error: (xhr, textStatus, error) ->
-        console.log xhr.responseJSON.errors
-        callback(player)
-        return
-    
-
 
 class Testing
 
-  player = {
-    id: undefined
-    name: undefined
-    photo: undefined
-    provider: undefined
-    token: undefined 
-  }
-
-  sendAuth = (obj) ->
-    stateController('auth_loading')
-    player = obj
-    $.ajax 
-      type: 'POST'
-      url: '/api/players'
-      data: {
-        user_id: player.id
-        token: player.token
-        name: player.name
-        email: player.email
-        picture: player.photo
-      }
-      success: (data) =>
-        console.log data, player
-        stateController('auth_done')
-      error: (xhr, textStatus, error) ->
-        stateController('auth_error')
-        console.log xhr.responseJSON.errors
 
   startTest = () ->
     
     stateController('started')
-    attempt = new Attempt player, (obj) =>
+    attempt = new Attempt Player.data, (obj) =>
       $r = $('.result_container')
-      $r.find('.pic img').attr('src', player.photo)
+      $r.find('.pic img').attr('src', Player.data.photo)
       $r.find('.score').html(obj.score)
-      $r.find('.player-position').addClass('loading')
       Navigation.closePopup('test')
       Navigation.openPopup('result')
-      Player.getPlayer player.id, player.provider, (data) =>
-        console.log data
-        $r.find('.player-score span').html(data.score)
-        $r.find('.player-place span').html(data.place)
-        $r.find('.player-position').removeClass('loading')
+      Player.updateScore()
     t = 5
     $('.screen_test .timer').html(t)
     timer = setInterval (->
@@ -256,26 +209,14 @@ class Testing
         Navigation.changeScreen('test')
         Navigation.closePopup('result')
         startTest()
-
-
-  authController = (params, targetElement) ->
-    switch params.action
-      when 'auth'
-        # stateController('auth_loading')
-        switch params.provider
-          when 'fb'
-            Authorize.authorize.Fb().then (obj)->
-              sendAuth(obj)
-          when 'vk'
-            Authorize.authorize.Vk().then (obj)->
-              sendAuth(obj)
-      when 'back'
-        console.log('back')
+      when 'authorized'
+        stateController('auth_done')
 
 
   @init = () ->
     ee.addListener('ui_TestingCtrl', testingController)
-    ee.addListener('ui_AuthCtrl', authController)
+    ee.addListener('PlayerCtrl', testingController)
+    
 
     spin_opts = {lines: 12, length: 6, width: 3, radius: 8, corners: 0.9, rotate: 0, color: '#000000', speed: 1, trail: 49, shadow: false, hwaccel: false, className: 'spinner', zIndex: 2e9, top: '50%', left: '50%'}
     $loader = $('.screen_test .auth-loader')

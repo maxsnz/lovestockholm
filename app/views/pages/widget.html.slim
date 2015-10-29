@@ -12,6 +12,7 @@ html
   body
     .screens
       .screen.screen_main 
+        = render "_/video"
         = render :partial =>  "_/screen_main",   layout: 'screen'
       .screen.screen_about
         = render :partial =>  "_/screen_about",  layout: 'screen'

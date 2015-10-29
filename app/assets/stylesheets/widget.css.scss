@@ -48,6 +48,14 @@ p a {text-decoration: none; color:$gray;}
   text-decoration: none;
 }
 
+.auth-position {
+  h3 {font:36px/36px $bold;}
+  h5 {font:26px/32px $bold;}
+}
+.auth-button {margin: 20px 25px; cursor: pointer; display: inline-block;}
+.auth-button-fb {@include g-sprite('auth-fb');}
+.auth-button-vk {@include g-sprite('auth-vk');}
+
 .screen_main {
 
   background-image: image-url('bg1.jpg');
@@ -60,7 +68,11 @@ p a {text-decoration: none; color:$gray;}
 }
 
 .screen_test {
-
+  .loading {
+    width: 100%;
+    height: 100px;
+    position: relative;
+  }
   .instruction {
     text-align: center; margin-top: 90px; margin-bottom: 35px;
     .column {display: inline-block; width:250px;}
@@ -70,12 +82,6 @@ p a {text-decoration: none; color:$gray;}
     .icon_2 {@include g-sprite('test-icon_2');}
     .icon_3 {@include g-sprite('test-icon_3');}
   }
-  .auth-position {
-    h3 {font:36px/36px $bold;}
-  }
-  .auth-button {margin: 20px 25px; cursor: pointer; display: inline-block;}
-  .auth-button-fb {@include g-sprite('auth-fb');}
-  .auth-button-vk {@include g-sprite('auth-vk');}
 
   .start-button {
     display: inline-block;
@@ -190,8 +196,47 @@ p a {text-decoration: none; color:$gray;}
     .score {color:#fff; font:26px/30px $regular;     padding-right: 10px;}
     .name {color:#fff; font:18px/30px $regular;}
   }
+  .sidebar {
 
+  }
+  .sidebar-bg {
+    position: fixed; width:38%; background: $blue; right:0; top:0;
+    height:100%; z-index:0;
+  }
+  .sidebar {
+    position: absolute; width: 340px; right:0; z-index:10;
+    text-align: center;     top: 140px;
+  }
+
+  .pic {width:64px; height:64px; border-radius:50%; overflow:hidden; margin:0px auto;}
+  .pic img {width:64px;}
+  .player-position {
+    padding-top:40px;
+    .loader {display: none; width:100%; height:60px; position: relative;}
+    &.loading {
+      .player-score, .player-place {display: none;}
+      .loader {display: block;} 
+    }
+  }
+  .player-score, .player-place {
+    float:left; width:50%; 
+    font:26px/45px $regular; text-align: center;
+    color:#6a92b1; 
+    span {font:36px/36px $regular;color:$yellow;}
+  }
+  .player-name {font:26px/32px $bold; color:#fff;     margin-top: 20px;}
+  .loader {width:100%; height:340px; position: relative;}
 }
 
+.fullscreen-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  video {
+    width: 100vw;
+    margin: 0px auto;
+    display: block;
+  }
+}
 
 @import "_/test";

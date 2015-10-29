@@ -10,23 +10,25 @@
   .column
     .icon.icon_3
     .label Сражайся за призы
-  .auth-position
-    .state-dependable.state data-state="anonymous" data-controller="testStateCtrl"
+  .player-state.anonymous
+    .auth-position
       h3 Авторизируйся <br>для участия в конкурсе
-      .auth-position
-        a.auth-button.auth-button-fb.ui-clickable data-controller="AuthCtrl" data-action="auth" data-provider="fb" href="#" 
-        a.auth-button.auth-button-vk.ui-clickable data-controller="AuthCtrl" data-action="auth" data-provider="vk" href="#" 
+      a.auth-button.auth-button-fb.ui-clickable data-controller="AuthCtrl" data-action="auth" data-provider="fb" href="#" 
+      a.auth-button.auth-button-vk.ui-clickable data-controller="AuthCtrl" data-action="auth" data-provider="vk" href="#" 
+  .player-state.loading
+    .loader.auth-player-loader
+  .player-state.auth_error
+    p Ошибка авторизации
+    p
+      a.goback data-controller="AuthCtrl" data-action="back" href="#" попробовать еще раз
+  .player-state.authorized
     .state-dependable data-state="auth_done" data-controller="TestStateCtrl" style="display:none;"
       .start-position
         .button.start-button.ui-clickable data-controller="TestingCtrl" data-action="start" href="#"  Старт
     .state-dependable data-state="started" data-controller="TestStateCtrl" style="display:none;"
       .timer 5
-    .state-dependable data-state="auth_loading" data-controller="TestStateCtrl" style="display:none;"
-      .auth-loader
-    .state-dependable data-state="auth_error" data-controller="TestStateCtrl" style="display:none;"
-      p Ошибка авторизации
-      p
-        a.goback data-controller="AuthCtrl" data-action="back" href="#" попробовать еще раз
+
+
 
 
 
