@@ -1,0 +1,110 @@
+@import "_/base";
+
+$gray: #848d8f;
+
+body {
+  font: 11px/11px $regular;
+  -webkit-font-smoothing:antialiased;
+  color:#fff;
+  background: $blue;
+}
+
+a {text-decoration: none;}
+
+#map {height: 540px; width:100%;}
+.screens-wrapper {
+  height: 540px; width:100%; top:0; position: absolute;
+  background:rgba(2, 52, 88, 0.78);
+}
+.screens-position {position: relative; width:1020px; height:540px; margin:0px auto;}
+.screen {
+  position: absolute; top:0; left:0; width:100%; height:100%;
+}
+
+.top-menu {
+  position: absolute; left:10px; top:40px;
+  a.menu-item {display: inline-block;     vertical-align: top;}
+  .menu-icon_1, .menu-icon_2 {border-right:1px solid #fff; width:78px; height:50px; background-position: 50% 50%; background-repeat: no-repeat;}
+  .menu-icon_1 {background-image:inline-image('base64/map-menu-icon_1.png');}
+  .menu-icon_2 {background-image:inline-image('base64/map-menu-icon_2.png');}
+  .goabout {font:18px/56px $regular; color:$gray;     padding-left: 20px;}
+  .menucopy {}
+}
+
+
+.screen_main {
+  text-align: center;
+}
+
+.part {position: absolute; top:100px; left:50%; width:500px; margin-left:-250px;}
+.part_start {
+  .icons {
+    margin-top: 60px;
+    .icon {margin:0 15px; display: inline-block; height:39px; background-position: 50% 100%; background-repeat: no-repeat;}
+    .icon.icon_car {background-image:inline-image('base64/map-car-icon.png');width:57px;}
+    .icon.icon_ship {background-image:inline-image('base64/map-ship-icon.png'); width:73px;}
+  }
+
+  h1 {font:36px/36px $regular; margin: 44px 0 85px;}
+  input.map-input {
+    width:260px; height:52px; border:1px solid $yellow; 
+    background:#134f7f; display: inline-block;
+    padding:0 13px;
+    vertical-align: top; color:#fff; font:18px/50px $regular;
+  }
+  button.calculate-button {
+    display: inline-block; height:54px; width:54px;
+    background: #b7b6b4 inline-image('base64/map-arrow-icon.png') 50% 50% no-repeat;
+    border:none; outline:none; margin-left: 7px;
+    vertical-align: top; cursor: pointer;
+  }
+}
+
+.part_finish {
+  h2.yourroute {
+    font:36px/36px $regular; padding-left:40px;
+    background: inline-image('base64/map-info-icon.png') 0 50% no-repeat;
+  }
+  .route-container {margin: 55px 0 0 -100px; width:700px; }
+  .route-start  {
+    display: inline-block; font:26px/36px $regular; padding-right: 30px;
+    vertical-align: top;
+  }
+  .route-start span {font:36px/36px $regular;}
+  .route-arrow {
+    display:inline-block; width: 33px; 
+    background: inline-image('base64/map-arrow-icon_2.png') 0 50% no-repeat; height:80px;
+  }
+  .route-car, .route-ship { vertical-align: top;
+    display:inline-block; background-repeat: no-repeat;
+    padding:56px 30px 0; background-position: 50% 0%; font:26px/26px $regular;
+  }
+  .route-car  {
+    background-image:inline-image('base64/map-car-icon.png'); color:$gray;
+    background-position: 50% 19px;
+  }
+  .route-ship {
+    background-image:inline-image('base64/map-ship-icon.png'); color:#fff;
+
+  }
+  p.shortcopy {padding-top: 70px; font:22px/26px $regular;}
+  a.buybutton {
+    margin-top:30px; padding:0 25px; font:18px/40px $regular; 
+    color:#000; background:#fff; display: inline-block;
+  }
+  .newroute {
+    width: 46px; height: 54px; 
+    background-image:inline-image('base64/map-restart-icon.png'); 
+    position: absolute;  right: -220px;top: -60px;
+    cursor: pointer;
+  }
+}
+
+.screen_about {
+
+  .content-position {}
+  p  {}
+  p.small  {}
+  a.buybutton {}
+  .newroute {}
+}

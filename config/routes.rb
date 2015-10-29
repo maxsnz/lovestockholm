@@ -1,6 +1,7 @@
 Lovestockholm::Application.routes.draw do
   resources :pages
   get :widget, to: 'pages#widget'
+  get :map, to: 'pages#map'
   root "pages#index"
 
   namespace :api, defaults: {format: :json} do
