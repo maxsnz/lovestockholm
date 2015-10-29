@@ -19,7 +19,15 @@
   width: 1022px;
   height: 560px;
   margin: 0px auto;
-  .question {padding-top:45px; position: relative; height: 515px;}
+  position: relative;
+  .question {
+    padding-top:45px; 
+    position: absolute; 
+    height: 515px;
+    left:0;
+    background: $blue;
+    width: 100%
+  }
   .question_timer {font:26px/27px $extrabold; color:$yellow; @include g-sprite('timer-waves'); text-align: center; margin:0px auto 70px;}
   .question-question {font:26px/36px $bold;width: 840px; margin: 0px auto 45px; text-align: center;} 
   .question-options {}
@@ -30,7 +38,7 @@
     position: absolute; bottom:77px; right:0;
   }
   .question.choosed .next {display: block;}
-  .question.choosed .question-option {color:#848d8f;}
+  .question.choosed .question-option {color:$gray;}
 }
 
 

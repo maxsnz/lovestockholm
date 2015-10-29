@@ -19,19 +19,17 @@ class UpdateResult
       end
       i +=1
     }
-    bonus = 0 if bonus.to_i > 100
-    result.score = result.score + bonus.to_i
-    # result.correct_answers = result.questions.sort_by(&:id).select.with_index { |q, i|
-    #    q.correct_n == answers[i] 
-    # }.size
+    if bonus > 100
+      bonus = 0 
+    end
+    result.score +=bonus || 0 # TODO бонус не начисляется
 
     method = "answer_correctly" # если все ок
-    if (result.seconds > 100 * 10) || (result.seconds < 1)
+    if (result.seconds > 100 * 10) || (result.seconds < 1) # TODO поменять минимальное время
       method = "answer_reject"
       result.score = 0
     end
 
-    # "answer_#{result.correct_answers == result.questions.size ? "" : "in"  }correctly"
 
     result.send(method)
   end

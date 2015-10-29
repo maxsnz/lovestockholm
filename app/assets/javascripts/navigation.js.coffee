@@ -15,9 +15,14 @@ class Navigation
 
 
   screenController = (params, targetElement) ->
-    unless currentScreen is params.screen
+    if currentScreen isnt params.screen
       goScreen(currentScreen, params.screen)
       currentScreen = params.screen
+      Navigation.closePopup(params.close) if (params.close)
+    else if (params.close)
+        goScreen(currentScreen, params.screen)
+        currentScreen = params.screen
+        Navigation.closePopup(params.close)
 
   @changeScreen = (newScreen) ->
     goScreen(currentScreen, newScreen)

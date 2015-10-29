@@ -8,7 +8,7 @@ body {
 }
 
 
-.loader {position:absolute; top:0; z-index:100; background-color:rgba(255,255,255,0.4);  width:100%; height: 100%;}
+body>.loader {position:absolute; top:0; z-index:100; background-color:rgba(255,255,255,0.4);  width:100%; height: 100%;}
 
 .logo-big {@include g-sprite('logo-big');}
 .logo-black {@include g-sprite('logo-black'); margin:0px auto;}
@@ -25,6 +25,9 @@ body {
   display: none;
   width:100%; height:100%; position: absolute; top:0;
 }
+
+a.nav {text-decoration: none;}
+p a {text-decoration: none; color:$gray;}
 
 .menu {position: absolute; bottom:60px; left:0;}
 .menu-item {
@@ -98,6 +101,97 @@ body {
   position: relative;
 }
 
+.popup_result {
+  background:inline-image('base64/result-bg.png') 50% 0 repeat-y;
+  .result_inner {
+    width:1020px; height:100%; position: relative;
+    margin:0px auto;
+  }
+  .result_container {
+    position: absolute; top:0; left:0; width:443px; text-align: center;
+    .pic {width:64px; height:64px; border-radius:50%; overflow:hidden; margin:0px auto;}
+    .pic img {width:64px;}
+    .yourresult {color:$yellow; font:26px/26px $bold; margin-top:40px;}
+    .score { 
+      font:120px/160px $regular; color:$yellow;
+      background:inline-image('base64/result-frames.png') 50% 50% no-repeat;
+    }
+    .player-position {
+      width:100%; border-top:1px solid #fff;
+      padding-top:20px;
+      .loader {display: none; width:100%; height:60px; position: relative;}
+      &.loading {
+        .player-score, .player-place {display: none;}
+        .loader {display: block;} 
+      }
+    }
+    .player-score, .player-place {
+      float:left; width:50%; 
+      font:26px/45px $regular; text-align: center;
+      span {font:36px/36px $regular;}
+    }
+  }
+  .result_sidebar {
+    position: absolute; top:0; right:0; width:443px; text-align: center;
+  }
+  .logo-white {@include g-sprite('logo-white'); margin: 0px auto;}
+  .cross {position: absolute; right:16px; top:33px;@include g-sprite('cross');}
+  .tryanotherone {
+    color:$yellow;
+    background:inline-image('base64/tryanotherone.png') 50% 0 no-repeat;
+    display: inline-block; padding-top: 75px; font:18px/18px $bold;
+    margin: 75px 0 30px;
+  }
+  .gorating, .goabout {font:18px /18px $regular; color:$gray; margin-top: 40px; display: block;}
+}
+
+.screen_about {
+  text-align: center;
+  .about-title {font:36px/36px $bold; margin-bottom: 60px;}
+  p {text-align: left; width: 530px; margin:0px auto; font:18px/26px $regular; margin-bottom: 18px;}
+  .gray {color:$gray;}
+}
+
+.screen_prizes {
+  text-align: center;
+  .prizes-columns {padding-top: 100px;}
+  .prize-column {width: 35%; float:left; padding:0 3%;}
+  .prize-column+.prize-column {width:27%; padding:0 2%;}
+  .prize-column+.prize-column+.prize-column {width:20%; padding: 0 4%;}
+  .prize-pic {margin:0px auto; font:36px/77px $extrabold;}
+  .prizes-pic_1 {@include g-sprite('pize_1');}
+  .prizes-pic_2 {@include g-sprite('pize_2');}
+  .prizes-pic_3 {@include g-sprite('pize_3');}
+  .prize-pic_hint {color:$gray; margin-top: 18px; font:18px/24px $bold;}
+  .prize-description {margin-top: 18px; font:18px/24px $bold;}
+}
+
+.screen_rules {
+  .rules-icons {
+    width: 430px; height: 300px;
+    background:inline-image('base64/rules-icons.png') 0 0 no-repeat;
+    float:left; margin-top: 50px;
+  }
+  
+  .rules-text {
+    float:left; width:572px; margin-top: 75px;
+    p {font:18px/26px $regular; margin-bottom: 20px;}
+  }
+  
+}
+
+.screen_rating {
+  .rating-container {padding-top: 65px;}
+  .rating-item {
+    list-style-type: decimal;
+    color:$yellow;
+    font:26px/30px $regular;
+    vertical-align: bottom;
+    .score {color:#fff; font:26px/30px $regular;     padding-right: 10px;}
+    .name {color:#fff; font:18px/30px $regular;}
+  }
+
+}
 
 
 @import "_/test";

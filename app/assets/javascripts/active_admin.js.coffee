@@ -20,10 +20,10 @@ window.render_question = (question, correct) ->
   if question.kind is 'order'
     $question.find( "ul" ).sortable()
     $question.find( "ul" ).disableSelection()
-    i = 0
+    i = 3
     $question.find(".question-option").each ->
       $(@).find('.question-option-n').html(correct[i])
-      i++
+      i--
 
 
 $ ->

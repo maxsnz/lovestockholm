@@ -1,17 +1,37 @@
-Question = (obj, attempt) ->
+Question = (obj, callback) ->
   @_data = obj
-  @_attempt = attempt
+  @_callback = callback
   @_$question = undefined
   @_$c = $('.question_container')
+  @_interval = undefined
   @_init()
+  
 
 Question::_init = () ->
   tmpl = _.template($('#tmpl_question').html())
   if @_data.kind is 'simple'
     @_data.kind = @_data.kind + '_image' if (@_data.picture.picture.url)
 
-  @_$question = $(tmpl(@_data)).appendTo(@_$c)
+  @_$question = $(tmpl(@_data)).hide().appendTo(@_$c).fadeIn()
   @_$question.data('context', @)
+
+  $timer = @_$question.find('.question_timer')
+  time = 100
+  old_time = new Date()
+  context = @
+  @_interval = setInterval (=>
+    new_time = new Date()
+    time = time - Math.round((new_time - old_time)/1000)
+    old_time = new_time
+    console.log time
+    if time < 0
+      clearInterval(context._interval)
+      ee.emitEvent('ui_QuestionCtrl', [{value:0, action:'timeout'}, $timer ])
+      console.log 'timeout'
+    else
+      $timer.html(time)
+  ), 1000
+
 
   if @_data.kind is 'order'
     $q = @_$question
@@ -44,43 +64,46 @@ Question::_questionController = (params, targetElement) ->
       context._$question.addClass 'choosed'
     when 'next'
       if params.value
-        context._attempt.answeredQuestion(params.value)
+        clearInterval(context._interval)
+        context._$question.fadeOut 500, ->
+          $(@).remove()
+        context._callback(params.value)
+    when 'timeout'
+      context._$question.fadeOut 500, ->
+        $(@).remove()
+      context._callback(0)
 
 
-Question::_choose = (value) ->
-
-Question::_answer = (value) ->
-  
-
-Attempt = (player) ->
+Attempt = (player, callback) ->
   @_player = player
   @_questions = undefined
   @_id = undefined
-  @_$c = $('.question_container')
+  @_callback = callback
+  # @_$c = $('.question_container')
   @_answers = []
   @_init()
-  
   return
-
 
 Attempt::_init = () ->
   console.log('attempt init')
   @_getQuestions()
-  @_$c.html('')
+  # @_$c.html('')
   return
 
-Attempt::answeredQuestion = (value) ->
-  console.log value
-  @_answers.push({option:value, time: 50})
-  if @_answers.length < @_questions.length
-    @_$c.html('')
-    @_generateQuestion @_questions[@_answers.length]
-  else
-    @_sendAnswers()
-
 Attempt::_generateQuestion = (data) ->
-  question = new Question(data, @)
-
+  start_t = new Date()
+  question = new Question data, (value) =>
+    finish_t = new Date()
+    time = Math.round(  (finish_t - start_t)/1000 )
+    console.log value, time
+    time = 100 if time <= 0
+    time = 100 if time > 100
+    @_answers.push({option:value, time: time}) # time - истраченное время
+    if @_answers.length < @_questions.length
+      # @_$c.html('')
+      @_generateQuestion @_questions[@_answers.length]
+    else
+      @_sendAnswers()
 
 Attempt::start = () ->
   console.log 'start'
@@ -91,9 +114,6 @@ Attempt::start = () ->
       Navigation.openPopup 'test', ->
         console.log 'test was started!!!'     
   ), 1000
-  
-
-Attempt::_stateAsString = ->
 
 Attempt::_sendAnswers = () ->
   $.ajax 
@@ -104,10 +124,10 @@ Attempt::_sendAnswers = () ->
       user_id: @_player.id
       token: @_player.token
       answers: JSON.stringify(@_answers)
-      bonus: 50
+      bonus: 99
     }
     success: (data) =>
-      @_showResult(data)
+      @_callback(data)
     error: (xhr, textStatus, error) ->
       console.log xhr.responseJSON
 
@@ -127,12 +147,38 @@ Attempt::_getQuestions = () ->
     error: (xhr, textStatus, error) ->
       console.log xhr.responseJSON
 
-Attempt::_showResult = (obj) ->
-  obj.player = @_player
-  console.log obj
-  tmpl = _.template($('#tmpl_result').html())
-  @_$c.html('')
-  $result = $(tmpl(obj)).appendTo(@_$c)
+
+class Rating
+  @init = () ->
+    $.ajax 
+      type: 'GET'
+      url: '/api/players/'
+      success: (data) =>
+        tmpl = _.template($('#tmpl_rating').html())
+        $c = $('.rating-container ol')
+        i = 0
+        while i < data.players.length       
+          $r = $(tmpl(data.players[i])).appendTo($c)
+          console.log data.players[i]
+          i++
+
+window.Rating = Rating
+
+
+class Player  
+  @getPlayer = (uid, provider, callback) ->
+    console.log uid, provider
+    $.ajax 
+      type: 'GET'
+      url: '/api/players/'+provider+':'+uid
+      success: (data) =>
+        callback(data)
+        return
+      error: (xhr, textStatus, error) ->
+        console.log xhr.responseJSON.errors
+        callback(player)
+        return
+    
 
 
 class Testing
@@ -165,31 +211,52 @@ class Testing
         stateController('auth_error')
         console.log xhr.responseJSON.errors
 
+  startTest = () ->
+    
+    stateController('started')
+    attempt = new Attempt player, (obj) =>
+      $r = $('.result_container')
+      $r.find('.pic img').attr('src', player.photo)
+      $r.find('.score').html(obj.score)
+      $r.find('.player-position').addClass('loading')
+      Navigation.closePopup('test')
+      Navigation.openPopup('result')
+      Player.getPlayer player.id, player.provider, (data) =>
+        console.log data
+        $r.find('.player-score span').html(data.score)
+        $r.find('.player-place span').html(data.place)
+        $r.find('.player-position').removeClass('loading')
+    t = 5
+    $('.screen_test .timer').html(t)
+    timer = setInterval (->
+      t = t - 1
+      $('.screen_test .timer').html(t)
+      if t is 1
+        attempt.start()
+      if t is 0
+        clearInterval(timer)
+        setTimeout (->
+          stateController('auth_done')
+          $('.screen_test .timer').html(5)
+        ), 1000
+    ), 1000
+
+
   stateController = (state) ->
-    console.log state
     $('.screen_test .state-dependable').hide()
     $('.screen_test .state-dependable[data-state="'+state+'"]').show()
 
   testingController = (params, targetElement) ->
     switch params.action
       when 'start'
-        stateController('started')
-        attempt = new Attempt(player)
-        t = 5
-        $('.screen_test .timer').html(t)
-        timer = setInterval (->
-          
-          t = t - 1
-          $('.screen_test .timer').html(t)
-          if t is 1
-            attempt.start()
-          if t is 0
-            clearInterval(timer)
-
-            
-        ), 1000
+        startTest()
       when 'finish'
         console.log 'finish'
+      when 'restart'
+        Navigation.changeScreen('test')
+        Navigation.closePopup('result')
+        startTest()
+
 
   authController = (params, targetElement) ->
     switch params.action

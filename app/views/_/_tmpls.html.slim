@@ -1,6 +1,6 @@
 <script type="text/html" id="tmpl_result">
   <div class="result">
-  <div class="spacer-40"></div>
+    <div class="spacer-40"></div>
     <div class="pic"><img src="<%= player.photo %>" /></div>
     <p>Твой результат</p>
     <div class="score"><%= score %></div>
@@ -9,6 +9,13 @@
       <div class="player-place"></div>
     </div>
   </div>
+</script>
+
+<script type="text/html" id="tmpl_rating">
+  <li class="rating-item">
+    <span class="score"><%= score %></span>
+    <span class="name"><%= name %></span>
+  </li>
 </script>
 
 <script type="text/html" id="tmpl_question">
