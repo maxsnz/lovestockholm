@@ -11,12 +11,14 @@ $ ->
 
 window.initMap = ->
   directionsService = new (google.maps.DirectionsService)
-  directionsDisplay = new (google.maps.DirectionsRenderer)
+  directionsDisplay = new (google.maps.DirectionsRenderer)({polylineOptions: {strokeColor: "#949fa1"}})
   map = new (google.maps.Map)(document.getElementById('map'),
     zoom: 7
+    disableDefaultUI: true
     center:
       lat: 60.2312266
       lng: 28.0543429)
+  map.setOptions({styles: styles})
   directionsDisplay.setMap map
 
   onChangeHandler = ->
@@ -70,3 +72,73 @@ calculateAndDisplayRoute = (directionsService, directionsDisplay) ->
 
 
   # https://developers.google.com/maps/documentation/javascript/examples/polyline-simple
+styles = [
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#115698" }
+    ]
+  },{
+    "featureType": "landscape",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#1464b0" }
+    ]
+  },{
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#3379bb" },
+      { "weight": 0.1 },
+      { "visibility": "off" }
+    ]
+  },{
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      { "visibility": "on" },
+      { "weight": 3.1 },
+      { "color": "#1567b5" }
+    ]
+  },{
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#0b3660" }
+    ]
+  },{
+    "featureType": "road.arterial",
+    "elementType": "geometry",
+    "stylers": [
+      { "color": "#115596" }
+    ]
+  },{
+    "elementType": "labels.text.fill",
+    "stylers": [
+      { "visibility": "on" }
+    ]
+  },{
+    "featureType": "administrative.country",
+    "elementType": "geometry",
+    "stylers": [
+      { "visibility": "on" },
+      { "color": "#0c3a67" }
+    ]
+  },{
+    "featureType": "administrative.province",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      { "visibility": "on" },
+      { "color": "#0c3a67" },
+      { "weight": 0.5 }
+    ]
+  },{
+    "featureType": "administrative.locality",
+    "elementType": "labels.icon"  },{
+    "featureType": "water",
+    "elementType": "labels",
+    "stylers": [
+      { "visibility": "off" }
+    ]
+  }
+]

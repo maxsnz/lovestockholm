@@ -11,10 +11,10 @@ body {
 
 a {text-decoration: none;}
 
-#map {height: 540px; width:100%;}
+#map {height: 570px; width:100%;}
 .screens-wrapper {
   height: 540px; width:100%; top:0; position: absolute;
-  background:rgba(2, 52, 88, 0.78);
+  // background:rgba(2, 52, 88, 0.78);
 }
 .screens-position {position: relative; width:1020px; height:540px; margin:0px auto;}
 .screen {
@@ -65,7 +65,7 @@ a {text-decoration: none;}
     font:36px/36px $regular; padding-left:40px;
     background: inline-image('base64/map-info-icon.png') 0 50% no-repeat;
   }
-  .route-container {margin: 55px 0 0 -100px; width:700px; }
+  .route-container {margin: 35px 0 0 -100px; width:700px; padding:20px 0;     background: rgba(0,0,0,0.13);}
   .route-start  {
     display: inline-block; font:26px/36px $regular; padding-right: 30px;
     vertical-align: top;
@@ -87,7 +87,7 @@ a {text-decoration: none;}
     background-image:inline-image('base64/map-ship-icon.png'); color:#fff;
 
   }
-  p.shortcopy {padding-top: 70px; font:22px/26px $regular;}
+  p.shortcopy {padding-top: 50px; font:22px/26px $regular;}
   a.buybutton {
     margin-top:30px; padding:0 25px; font:18px/40px $regular; 
     color:#000; background:#fff; display: inline-block;
