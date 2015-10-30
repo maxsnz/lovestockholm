@@ -11,7 +11,7 @@ body {
 
 a {text-decoration: none;}
 
-#map {height: 570px; width:100%;}
+#map {height: 570px; width:100%;background: $blue;}
 .screens-wrapper {
   height: 540px; width:100%; top:0; position: absolute;
   // background:rgba(2, 52, 88, 0.78);
@@ -21,23 +21,51 @@ a {text-decoration: none;}
   position: absolute; top:0; left:0; width:100%; height:100%;
 }
 
+body.start .menucopy {display: none;}
+body.finish .menucopy {display: none;}
+body.about .menucopy {display: inline-block;}
+
+body.start .goabout {display: inline-block;}
+body.finish .goabout {display: inline-block;}
+body.about .goabout {display: none;}
+
+body.start .overlay {display: none;}
+body.finish .overlay {display: block;}
+body.about .overlay {display: none;}
+
+body.start .newroute {display: none;}
+body.finish .newroute {display: block;}
+body.about .newroute {display: block;}
+
 .top-menu {
-  position: absolute; left:10px; top:40px;
-  a.menu-item {display: inline-block;     vertical-align: top;}
+  position: absolute; left:50%; top:40px; margin-left:-500px;
+  a.menu-item {
+    display: inline-block;     vertical-align: top;
+    &:hover {color:#fff;}
+  }
   .menu-icon_1, .menu-icon_2 {border-right:1px solid #fff; width:78px; height:50px; background-position: 50% 50%; background-repeat: no-repeat;}
   .menu-icon_1 {background-image:inline-image('base64/map-menu-icon_1.png');}
   .menu-icon_2 {background-image:inline-image('base64/map-menu-icon_2.png');}
   .goabout {font:18px/56px $regular; color:$gray;     padding-left: 20px;}
-  .menucopy {}
+  .menucopy {
+    font:36px/34px $regular;     position: relative;
+    left: 30px; top: -5px; display: inline-block;
+  }
 }
 
-
-.screen_main {
-  text-align: center;
+.newroute {
+      width: 142px; height: 54px; color:$gray; font:18px/53px $regular;
+  background:inline-image('base64/map-restart-icon.png') 50% 0 no-repeat; 
+  &:hover {color:#fff; background:inline-image('base64/map-restart-icon-hover.png') 50% 0 no-repeat; }
+  position: fixed;  right: 50%; top: 40px; 
+  cursor: pointer; margin-right: -480px;
 }
 
-.part {position: absolute; top:100px; left:50%; width:500px; margin-left:-250px;}
-.part_start {
+.overlay {width:100%; height:100%; position: fixed; top:0; pointer-events:none; background: rgba(0, 0, 0, 0.23);}
+
+.screen_start {
+  text-align: center; 
+  position: absolute; top:100px; left:50%; width:500px; margin-left:-250px;
   .icons {
     margin-top: 60px;
     .icon {margin:0 15px; display: inline-block; height:39px; background-position: 50% 100%; background-repeat: no-repeat;}
@@ -57,18 +85,24 @@ a {text-decoration: none;}
     background: #b7b6b4 inline-image('base64/map-arrow-icon.png') 50% 50% no-repeat;
     border:none; outline:none; margin-left: 7px;
     vertical-align: top; cursor: pointer; 
+    &:hover {opacity:0.7;}
   }
 }
 
-.part_finish {
+.screen_finish {
+  text-align: center; 
+  position: absolute; top:100px; left:50%; width:500px; margin-left:-250px;
   h2.yourroute {
     font:36px/36px $regular; padding-left:40px;
     background: inline-image('base64/map-info-icon.png') 0 50% no-repeat;
     display: inline-block;
   }
-  .route-container {margin: 35px 0 0 -100px; width:700px; padding:20px 0;     background: rgba(0,0,0,0.13);}
+  .route-container {
+    margin: 35px 0 0 -100px; width:700px; padding:20px 0;     
+    // background: rgba(0,0,0,0.13);
+  }
   .route-start  {
-    display: inline-block; font:26px/36px $regular; padding-right: 30px;
+    display: inline-block; font:26px/36px $regular; padding-left: 30px;
     vertical-align: top;
   }
   .route-start span {font:36px/36px $regular;}
@@ -92,12 +126,7 @@ a {text-decoration: none;}
   a.buybutton {
     margin-top:30px; padding:0 25px; font:18px/40px $regular; 
     color:#000; background:#fff; display: inline-block;
-  }
-  .newroute {
-    width: 46px; height: 54px; 
-    background-image:inline-image('base64/map-restart-icon.png'); 
-    position: absolute;  right: -220px;top: -60px;
-    cursor: pointer;
+    &:hover {background:rgba(255,255,255,0.7);}
   }
 }
 
@@ -110,10 +139,8 @@ a {text-decoration: none;}
   a.buybutton {
     padding:0 25px; font:18px/40px $regular; 
     color:#000; background:#fff; display: inline-block;
+    &:hover {background:rgba(255,255,255,0.7);}
   }
-  .menucopy {
-    font:36px/34px $regular;     position: relative;
-    left: 30px; top: -5px; display: inline-block;
-  }
+
   // .newroute {}
 }

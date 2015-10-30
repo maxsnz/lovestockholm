@@ -1,6 +1,7 @@
 #= require jquery-2.1.4.min
 map = undefined
 markers = []
+screen = 'start'
 
 $ ->
   # console.log 'maps works'
@@ -9,8 +10,7 @@ $ ->
 
   $('.goabout').click (e) ->
     e.preventDefault()
-    $('.screen_main').fadeOut()
-    $('.screen_about').fadeIn()
+    goScreen('about')
 
 
 # window.intToTime = (value) ->
@@ -18,6 +18,12 @@ $ ->
 #   o = value % (60*60)
 #   m = Math.round(o / 60)
 #   return {h:h, m:m}
+
+goScreen = (new_screen) ->
+  $('.screen_'+screen).fadeOut 500
+  $('.screen_'+new_screen).fadeIn 500
+  $('body').removeClass(screen).addClass(new_screen)
+  screen = new_screen
 
 caluclateTime = (route) ->
   format = (s) ->
@@ -71,12 +77,10 @@ window.initMap = ->
       onChangeHandler() if $('.map-input').val().length > 0
 
 goFinish = () ->
-  $('.part_start').fadeOut()
-  $('.part_finish').fadeIn()
+  goScreen('finish')
 
 goStart = () ->
-  $('.part_start').fadeIn()
-  $('.part_finish').fadeOut()
+  goScreen('start')
 
 drawPolyline = (lat,lng) ->
   clearMarkers = ->
