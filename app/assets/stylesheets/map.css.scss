@@ -64,6 +64,7 @@ a {text-decoration: none;}
   h2.yourroute {
     font:36px/36px $regular; padding-left:40px;
     background: inline-image('base64/map-info-icon.png') 0 50% no-repeat;
+    display: inline-block;
   }
   .route-container {margin: 35px 0 0 -100px; width:700px; padding:20px 0;     background: rgba(0,0,0,0.13);}
   .route-start  {
@@ -101,10 +102,18 @@ a {text-decoration: none;}
 }
 
 .screen_about {
-
-  .content-position {}
-  p  {}
-  p.small  {}
-  a.buybutton {}
-  .newroute {}
+  background: $blue image-url('map-bg.jpg') 50% 0 no-repeat;     position: fixed;
+  .inner {position: relative; width:1020px; height:540px; margin:0px auto;}
+  .content-position {position: absolute; top:137px; left:156px;}
+  p  {font:18px/26px $regular; margin-bottom: 40px;}
+  p.small  {font:12px/24px $regular; }
+  a.buybutton {
+    padding:0 25px; font:18px/40px $regular; 
+    color:#000; background:#fff; display: inline-block;
+  }
+  .menucopy {
+    font:36px/34px $regular;     position: relative;
+    left: 30px; top: -5px; display: inline-block;
+  }
+  // .newroute {}
 }
