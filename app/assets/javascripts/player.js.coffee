@@ -21,7 +21,6 @@ class Player
         picture: Player.data.photo
       }
       success: (data) =>
-        console.log 'success auth'
         Player.setState 'authorized'
         ee.emitEvent('PlayerCtrl', [ action:'authorized' ])
         Player.updateScore()
@@ -49,7 +48,6 @@ class Player
   @updateScore = () ->
     $('.player-position').addClass('loading')
     Player.getPlayer (data) =>
-      console.log data
       $('.player-pic img').attr('src', data.picture)
       $('.player-score span').html(data.score)
       $('.player-place span').html(data.place)

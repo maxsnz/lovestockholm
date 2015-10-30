@@ -21,12 +21,9 @@ $ ->
   Player.init()
   Testing.init()
   Rating.init()
-  # $('.fullscreen-bg video').prop('muted', true)
-  # $('.fullscreen-bg video').prop('loop', true)
-  # $('.fullscreen-bg video').prop('autoplay', true)
-  $('.fullscreen-bg video').bind 'ended', ->
-    $(@).play()
-    console.log 'ended'
+  # $('.fullscreen-bg video').bind 'ended', ->
+  #   $(@).play()
+  #   console.log 'ended'
   
 
   spin_opts = {lines: 12, length: 6, width: 3, radius: 8, corners: 0.9, rotate: 0, color: '#ffffff', speed: 1, trail: 49, shadow: false, hwaccel: false, className: 'spinner', zIndex: 2e9, top: '50%', left: '50%'}

@@ -8,70 +8,57 @@ Question = (obj, callback) ->
   
 
 Question::_init = () ->
+  context = @
   tmpl = _.template($('#tmpl_question').html())
   if @_data.kind is 'simple'
     @_data.kind = @_data.kind + '_image' if (@_data.picture.picture.url)
 
   @_$question = $(tmpl(@_data)).hide().appendTo(@_$c).fadeIn()
-  @_$question.data('context', @)
-
-  $timer = @_$question.find('.question_timer')
-  time = 100
-  old_time = new Date()
-  context = @
-  @_interval = setInterval (=>
-    new_time = new Date()
-    time = time - Math.round((new_time - old_time)/1000)
-    old_time = new_time
-    # console.log time
-    if time < 0
-      clearInterval(context._interval)
-      ee.emitEvent('ui_QuestionCtrl', [{value:0, action:'timeout'}, $timer ])
-      console.log 'timeout'
-    else
-      $timer.html(time)
-  ), 1000
-
 
   if @_data.kind is 'order'
     $q = @_$question
     @_$question.find( "ul" ).sortable
       sort: (event, ui) ->
-        $q.addClass 'choosed'
       update: (event, ui) ->
-        $n = $q.find('.next')
+    @_$question.find( "ul" ).disableSelection()
+    @_$question.find('.next').click (e) =>
+      s = ''
+      $q.find('.question-option').each ->
+        s = s + $(@).attr('data-value') if $(@).attr('data-value')
+      @_answer(s)
+  else
+    @_$question.find('.question-option').click (e) =>
+      $el = $(e.target).closest('.question-option')
+      @_answer($el.attr('data-value'))
+
+    @_$question.find('.next').click (e) =>
+      @_answer(0)
+    
+  $timer = @_$question.find('.question_timer')
+  time = 100
+  old_time = new Date()
+  @_interval = setInterval (=>
+    new_time = new Date()
+    time = time - Math.round((new_time - old_time)/1000)
+    old_time = new_time
+    if time < 0
+      clearInterval(@_interval)
+      if @_data.kind is 'order'
         s = ''
         $q.find('.question-option').each ->
           s = s + $(@).attr('data-value') if $(@).attr('data-value')
-        ee.emitEvent('ui_QuestionCtrl', [{value:s, action:'dragorder'}, $(@) ])
+      else
+        s = 0
+      @_answer(s)
+    else
+      $timer.html(time)
+  ), 1000
 
-    @_$question.find( "ul" ).disableSelection()
-  else 
-    ee.addListener('ui_QuestionCtrl', @_questionController)
-
-Question::_questionController = (params, targetElement) ->
-  context = $(targetElement).closest('.question').data('context')
-  $q = context._$question
-  switch params.action
-    when 'choose'
-      $q.find('.question-option').removeClass 'active'
-      context._$question.find('.question-option[data-value="'+params.value+'"]').addClass 'active'
-      context._$question.find('.next').attr('data-value', params.value)
-      context._$question.addClass 'choosed'
-    when 'dragorder'
-      $q.find('.question-option').removeClass 'active'
-      context._$question.find('.next').attr('data-value', params.value)
-      context._$question.addClass 'choosed'
-    when 'next'
-      if params.value
-        clearInterval(context._interval)
-        context._$question.fadeOut 500, ->
-          $(@).remove()
-        context._callback(params.value)
-    when 'timeout'
-      context._$question.fadeOut 500, ->
-        $(@).remove()
-      context._callback(0)
+Question::_answer = (value) ->
+  clearInterval(@_interval)
+  @_$question.fadeOut 500, ->
+    $(@).remove()
+  @_callback(value)
 
 
 Attempt = (player, callback) ->
@@ -85,7 +72,6 @@ Attempt = (player, callback) ->
   return
 
 Attempt::_init = () ->
-  console.log('attempt init')
   @_getQuestions()
   # @_$c.html('')
   return
@@ -106,16 +92,15 @@ Attempt::_generateQuestion = (data) ->
       @_sendAnswers()
 
 Attempt::start = () ->
-  console.log 'start'
   timer = setInterval (=>
     if @_questions.length > 0
       clearInterval(timer)
       @_generateQuestion(@_questions[0])
-      Navigation.openPopup 'test', ->
-        console.log 'test was started!!!'     
+      Navigation.openPopup 'test', -> 
   ), 1000
 
 Attempt::_sendAnswers = () ->
+  console.log '_sendAnswers', @_id, @_answers
   $.ajax 
     type: 'POST'
     url: '/api/results/'+@_id
@@ -159,7 +144,6 @@ class Rating
         i = 0
         while i < data.players.length       
           $r = $(tmpl(data.players[i])).appendTo($c)
-          console.log data.players[i]
           i++
 
 window.Rating = Rating
@@ -170,7 +154,7 @@ class Testing
 
 
   startTest = () ->
-    
+    $('.screen_test .bottom-position .menu').addClass('unavaliable')
     stateController('started')
     attempt = new Attempt Player.data, (obj) =>
       $r = $('.result_container')
@@ -191,6 +175,7 @@ class Testing
         setTimeout (->
           stateController('auth_done')
           $('.screen_test .timer').html(5)
+          $('.screen_test .bottom-position .menu').removeClass('unavaliable')
         ), 1000
     ), 1000
 
@@ -203,8 +188,6 @@ class Testing
     switch params.action
       when 'start'
         startTest()
-      when 'finish'
-        console.log 'finish'
       when 'restart'
         Navigation.changeScreen('test')
         Navigation.closePopup('result')

@@ -11,6 +11,7 @@
 
 .popup_test {
   background: $blue;
+  @include userselect(none);
 }
 
 
@@ -22,7 +23,7 @@
   position: relative;
   .question {
     padding-top:45px; 
-    position: absolute; 
+    position: absolute;  
     height: 515px;
     left:0;
     background: $blue;
@@ -31,14 +32,15 @@
   .question_timer {font:26px/27px $extrabold; color:$yellow; @include g-sprite('timer-waves'); text-align: center; margin:0px auto 70px;}
   .question-question {font:26px/36px $bold;width: 840px; margin: 0px auto 45px; text-align: center;} 
   .question-options {}
-  .question-option {font:18px/34px $regular;cursor: pointer;}
+  .question-option {
+    font:18px/34px $regular;cursor: pointer; color:$gray;
+    &:hover {color:#fff;}
+  }
   .question .next { 
-    display: none;
     @include g-sprite('next'); cursor: pointer;
     position: absolute; bottom:77px; right:0;
+    &:hover {@include g-sprite('next-hover');}
   }
-  .question.choosed .next {display: block;}
-  .question.choosed .question-option {color:$gray;}
 }
 
 

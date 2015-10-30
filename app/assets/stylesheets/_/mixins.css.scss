@@ -33,6 +33,13 @@
   @media only screen and (max-width: $size) { @content; }
 }
 
+@mixin userselect($property) {
+  -webkit-user-select: $property; 
+  -moz-user-select: $property;     
+  -ms-user-select: $property;     
+  user-select: $property;
+}
+
 
 
 @mixin keyframes($name) {
@@ -56,11 +63,11 @@
     
   }
   50% {
-    @include rotate(180deg);
+    @include rotate(-180deg);
     
   }
   100% {
-    @include rotate(360deg);
+    @include rotate(-360deg);
   }
 }
 

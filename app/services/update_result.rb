@@ -14,7 +14,7 @@ class UpdateResult
     result.score = 0
     i = 0
     result.questions.all.find_each { |q|
-      if q.correct == answers[i]['option'] 
+      if q.correct == answers[i]['option'].to_i
         result.score = result.score + (100-answers[i]['time'].to_i)
       end
       i +=1
