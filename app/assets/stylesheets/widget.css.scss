@@ -239,10 +239,12 @@ p a {text-decoration: none; color:$gray;}
 
 .screen_rating {
   .rating-container {padding-top: 65px;}
+  ol.left {position: absolute; left: 0;}
+  ol.right {position: absolute; left: 330px;}
   .rating-item {
     list-style-type: decimal;
     color:$yellow;
-    font:26px/30px $regular;
+    font:26px/40px $regular;
     vertical-align: bottom;
     .score {color:#fff; font:26px/30px $regular;     padding-right: 10px;}
     .name {color:#fff; font:18px/30px $regular;}
