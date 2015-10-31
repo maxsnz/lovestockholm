@@ -1,4 +1,15 @@
 .share-board
-  .share-button
-  .share-button
-  .share-button
+  .like-button.like-fb
+    .like-container
+      <div class="fb-like" data-href="http://www.lovestockholm.ru" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+  .like-button.like-vk
+    #vk_like
+    coffee:
+      window.onload = ->
+        VK.Widgets.Like "vk_like", 
+          type: "mini"
+          pageUrl: 'http://www.lovestockholm.ru'
+
+  .like-button.like-tw 
+    a.twitter-share-button href="https://twitter.com/intent/tweet?url=http://www.lovestockholm.ru&text=love stockholm" data-counturl="http://www.lovestockholm.ru" data-coun="horizontal" Tweet
+

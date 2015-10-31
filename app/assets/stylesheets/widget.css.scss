@@ -59,6 +59,21 @@ p a {text-decoration: none; color:$gray;}
   &:hover {background:rgba(255,255,255,0.7);}
 }
 
+.share-board {
+  position: absolute; bottom:58px;     right: 50%; margin-right: -490px;
+  .like-container {overflow:hidden; width:78px; height:21px;}
+  .like-button  {
+    display: inline-block; 
+    height:26px; 
+    line-height: 26px; 
+    margin:0 3px; 
+    vertical-align: top;
+  }
+  .like-fb {    padding-right: 15px;}
+  .fb-like {    top: -5px}
+  .like-tw a {font-size:0;}
+}
+
 .bottom-position {
 
 }
@@ -274,5 +289,6 @@ p a {text-decoration: none; color:$gray;}
     display: block;
   }
 }
+
 
 @import "_/test";

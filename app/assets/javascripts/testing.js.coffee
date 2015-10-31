@@ -1,14 +1,36 @@
+Timer = (time, $el, callback) ->
+  @_interval = undefined
+  @_$el = $el
+  @_time = time
+  @_callback = callback
+  @_init()
+
+Timer::_init = () ->
+  old_time = new Date()
+  @_interval = setInterval (=>
+    new_time = new Date()
+    @_time = @_time - Math.round((new_time - old_time)/1000)
+    old_time = new_time
+    if @_time < 0
+      @remove()
+      @_callback()
+    else
+      @_$el.html(@_time)
+  ), 1000
+
+Timer::remove = () ->
+  clearInterval(@_interval)
+
 Question = (obj, callback) ->
   @_data = obj
   @_callback = callback
   @_$question = undefined
   @_$c = $('.question_container')
-  @_interval = undefined
+  @_timer = undefined
   @_init()
   
 
 Question::_init = () ->
-  context = @
   tmpl = _.template($('#tmpl_question').html())
   if @_data.kind is 'simple'
     @_data.kind = @_data.kind + '_image' if (@_data.picture.picture.url)
@@ -34,32 +56,106 @@ Question::_init = () ->
     @_$question.find('.next').click (e) =>
       @_answer(0)
     
-  $timer = @_$question.find('.question_timer')
-  time = 100
-  old_time = new Date()
-  @_interval = setInterval (=>
-    new_time = new Date()
-    time = time - Math.round((new_time - old_time)/1000)
-    old_time = new_time
-    if time < 0
-      clearInterval(@_interval)
-      if @_data.kind is 'order'
-        s = ''
-        $q.find('.question-option').each ->
-          s = s + $(@).attr('data-value') if $(@).attr('data-value')
-      else
-        s = 0
-      @_answer(s)
-    else
-      $timer.html(time)
-  ), 1000
+  @_timer = new Timer 100, @_$question.find('.question_timer'), =>
+    @_timeout()
+
+Question::_timeout = () ->
+  if @_data.kind is 'order'
+    s = ''
+    @_$question.find('.question-option').each ->
+      s = s + $(@).attr('data-value') if $(@).attr('data-value')
+  else
+    s = 0
+  @_answer(s)
 
 Question::_answer = (value) ->
-  clearInterval(@_interval)
+  @_timer.remove()
   @_$question.fadeOut 500, ->
     $(@).remove()
   @_callback(value)
 
+BonusQuestion = (step, callback) ->
+  @_callback = callback
+  @_$question = undefined
+  @_$c = $('.question_container')
+  @_timer = undefined
+  @_step = step
+  @_score = 0
+  @_$blinker = undefined
+  @_$progress = undefined
+  @_arr = []
+  @_init()
+
+BonusQuestion.prototype = Object.create(Question.prototype)
+
+BonusQuestion::_init = () ->
+  @_data = {kind:'bonus'}
+  tmpl = _.template($('#tmpl_bonusquestion').html())
+  @_$question = $(tmpl(@_data)).hide().appendTo(@_$c).fadeIn()
+  @_$question.find('.play-icon').click (e) =>
+    e.stopPropagation()
+    @_$question.find('.play-icon').hide()
+    @_$question.find('.sound-icon-position').show()
+    @_$blinker = @_$question.find('.sound-icon-yellow')
+    @_$progress = @_$question.find('.progress')
+    @_blink()
+    $bit = $('#bit_'+@_step)
+    $bit.get(0).play()
+    blinkInterval = setInterval (=>
+      @_blink() unless $bit[0].paused
+    ), @_step
+    $bit.on 'ended',  =>
+      clearInterval(blinkInterval)
+
+    $(document).on 'keydown', (e) =>
+      e.preventDefault
+      @_tap(e)
+
+    @_$question.on 'click', (e) =>
+      @_tap(e)
+
+
+  @_timer = new Timer 100, @_$question.find('.question_timer'), =>
+    @_timeout()
+
+BonusQuestion::_timeout = () ->
+  @_finish()
+
+BonusQuestion::_tap = (e) ->
+  # чтобы пройти этот вопрос - нужно сделать 21 нажатие
+  # это 20 интервалов, за величину каждого полагаются баллы
+  # console.log e.which # код клавиши
+  if @_arr.length < 21
+    d = new Date()
+    @_arr.push d
+    @_blink()
+    @_$progress.css('width', @_arr.length/20*100+'%')
+    if @_arr.length > 1
+      i = @_arr.length-1
+      interval = @_arr[i]-@_arr[i-1]
+      delta = Math.abs(@_step-interval)
+      percent = delta/@_step
+      difficulty = 50 # чем больше число, тем сложнее пройти тест
+      # penalty = percent * 10 # сложность: чем больше число, тем сложнее
+      bonus = 5 - (difficulty * percent)
+      bonus = 0 if bonus < 0
+      @_score = @_score + bonus
+  if @_arr.length is 21
+    @_finish()
+
+BonusQuestion::_finish = () ->
+  @_score = Math.round(@_score)
+  @_timer.remove()
+  $(document).off 'keydown'
+  @_$question.off 'click'
+  @_$question.find('.progressbar').hide()
+  @_$question.find('.score').html('+ '+@_score+' !')
+  setTimeout (=>
+    @_answer @_score
+  ), 1000
+
+BonusQuestion::_blink = () ->
+  @_$blinker.fadeIn(@_step/10).fadeOut(@_step/10)
 
 Attempt = (player, callback) ->
   @_player = player
@@ -68,11 +164,13 @@ Attempt = (player, callback) ->
   @_callback = callback
   # @_$c = $('.question_container')
   @_answers = []
+  @_$loader = undefined
   @_init()
   return
 
 Attempt::_init = () ->
   @_getQuestions()
+  @_$loader = $('.popup_test .loader')
   # @_$c.html('')
   return
 
@@ -81,7 +179,7 @@ Attempt::_generateQuestion = (data) ->
   question = new Question data, (value) =>
     finish_t = new Date()
     time = Math.round(  (finish_t - start_t)/1000 )
-    console.log value, time
+    # console.log value, time
     time = 100 if time <= 0
     time = 100 if time > 100
     @_answers.push({option:value, time: time}) # time - истраченное время
@@ -89,7 +187,11 @@ Attempt::_generateQuestion = (data) ->
       # @_$c.html('')
       @_generateQuestion @_questions[@_answers.length]
     else
-      @_sendAnswers()
+      arr = [250,500,1000] 
+      bonusquestion = new BonusQuestion arr[Math.floor(Math.random()*arr.length)], (value) =>
+        # console.log 'bonus question result received!'
+        @_answers.push({option:value, time: time})
+        @_sendAnswers()
 
 Attempt::start = () ->
   timer = setInterval (=>
@@ -100,7 +202,8 @@ Attempt::start = () ->
   ), 1000
 
 Attempt::_sendAnswers = () ->
-  console.log '_sendAnswers', @_id, @_answers
+  # console.log '_sendAnswers', @_id, @_answers
+  @_$loader.fadeIn()
   $.ajax 
     type: 'POST'
     url: '/api/results/'+@_id
@@ -109,9 +212,9 @@ Attempt::_sendAnswers = () ->
       user_id: @_player.id
       token: @_player.token
       answers: JSON.stringify(@_answers)
-      bonus: 99
     }
     success: (data) =>
+      @_$loader.fadeOut()
       @_callback(data)
     error: (xhr, textStatus, error) ->
       console.log xhr.responseJSON
@@ -125,9 +228,19 @@ Attempt::_getQuestions = () ->
       token: @_player.token
     }
     success: (data) =>
-      console.log 'questions recieved!', data
+      # console.log 'questions recieved!', data
       @_id = data.id
       @_questions = data.questions
+
+      # debug start
+      # @_answers = []
+      # i = 0
+      # while i < 20
+      #   @_answers.push {option:0, time: 1}
+      #   i++
+      # @_answers.push {option:64, time: 20}
+      # @_sendAnswers()
+      # debug end
       
     error: (xhr, textStatus, error) ->
       console.log xhr.responseJSON
@@ -142,7 +255,9 @@ class Rating
         tmpl = _.template($('#tmpl_rating').html())
         $c = $('.rating-container ol')
         i = 0
-        while i < data.players.length       
+        l = 5
+        l = data.players.length if data.players.length < 5
+        while i < l
           $r = $(tmpl(data.players[i])).appendTo($c)
           i++
 
@@ -151,7 +266,6 @@ window.Rating = Rating
 
 
 class Testing
-
 
   startTest = () ->
     $('.screen_test .bottom-position .menu').addClass('unavaliable')
@@ -179,7 +293,6 @@ class Testing
         ), 1000
     ), 1000
 
-
   stateController = (state) ->
     $('.screen_test .state-dependable').hide()
     $('.screen_test .state-dependable[data-state="'+state+'"]').show()
@@ -195,14 +308,18 @@ class Testing
       when 'authorized'
         stateController('auth_done')
 
-
   @init = () ->
     ee.addListener('ui_TestingCtrl', testingController)
     ee.addListener('PlayerCtrl', testingController)
     
-
     spin_opts = {lines: 12, length: 6, width: 3, radius: 8, corners: 0.9, rotate: 0, color: '#000000', speed: 1, trail: 49, shadow: false, hwaccel: false, className: 'spinner', zIndex: 2e9, top: '50%', left: '50%'}
     $loader = $('.screen_test .auth-loader')
     loader = new Spinner(spin_opts).spin $loader[0]
+
+    # # debug start
+    # Navigation.openPopup('test')
+    # bonusquestion = new BonusQuestion 500, (value) =>
+    #   console.log 'bonus question result received!', value
+    # # debug end
 
 window.Testing = Testing

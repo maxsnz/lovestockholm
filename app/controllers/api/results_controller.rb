@@ -20,7 +20,7 @@ class Api::ResultsController < Api::BaseController
     result = Result.with_state(Result::PENDING).joins(:player).where(players: {uid: extract_uid}, id: params[:id]).first
 
     if result
-      UpdateResult.call(result, params[:answers], params[:bonus])
+      UpdateResult.call(result, params[:answers])
       render_result(result)
       player = Player.all.where(uid:extract_uid)[0]
       update_player_score(player)

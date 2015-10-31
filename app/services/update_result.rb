@@ -1,12 +1,11 @@
 class UpdateResult
   include CallableClass
 
-  attr_reader :result, :answers, :bonus
+  attr_reader :result, :answers
 
-  def initialize(result, answers, bonus)
+  def initialize(result, answers)
     @result = result
     @answers = JSON.parse(answers)
-    @bonus = bonus.to_i
   end
 
   def call
@@ -19,13 +18,11 @@ class UpdateResult
       end
       i +=1
     }
-    if bonus > 100
-      bonus = 0 
-    end
-    result.score +=bonus || 0 # TODO бонус не начисляется
+    bonus = answers[answers.length - 1]['option'].to_i
+    result.score = result.score + bonus if bonus < 101 && bonus > 0
 
     method = "answer_correctly" # если все ок
-    if (result.seconds > 100 * 10) || (result.seconds < 1) # TODO поменять минимальное время
+    if (result.seconds > 100 * 10) || (result.seconds < 0) # TODO поменять минимальное время
       method = "answer_reject"
       result.score = 0
     end
