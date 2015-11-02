@@ -1,3 +1,29 @@
+class Noisebox
+  currentPlayer = 0
+  playersLength = 10
+  $box = undefined
+  @inited = false
+
+  @bum = () ->
+    $p = $box.find('audio').eq(currentPlayer)
+    $p.get(0).play()
+    currentPlayer++
+    currentPlayer = 0 if currentPlayer is playersLength 
+
+  @init = () ->
+    $box = $('<div/>').addClass('noisebox')
+    $c = $('#bit')
+    i = 0
+    while i < playersLength
+      $p = $c.clone()
+      $p.appendTo $box
+      $p.get(0).load()
+      i++
+    @inited = true
+
+window.Noisebox = Noisebox
+
+
 Timer = (time, $el, callback) ->
   @_interval = undefined
   @_$el = $el
@@ -84,7 +110,7 @@ BonusQuestion = (step, callback) ->
   @_$blinker = undefined
   @_$progress = undefined
   @_arr = []
-  @_dirty = false
+  @_dirty = 0
   @_init()
 
 BonusQuestion.prototype = Object.create(Question.prototype)
@@ -100,25 +126,24 @@ BonusQuestion::_init = () ->
     @_$blinker = @_$question.find('.sound-icon-yellow')
     @_$progress = @_$question.find('.progress')
     @_blink()
-    $bit = $('#bit_'+@_step)
-    $bit.get(0).play()
+    # $bit.get(0).play()
     blinkInterval = setInterval (=>
-      @_blink() unless $bit[0].paused
-    ), @_step
-    $bit.on 'ended',  =>
-      if @_dirty
-        clearInterval(blinkInterval)
+      if @_dirty > 4
+        clearInterval blinkInterval
       else
-        $bit.currentTime = 0
-        $bit.get(0).play()
+        setTimeout (=>
+          @_blink() 
+        ), 100
+        Noisebox.bum()
+    ), @_step
 
     $(document).on 'keydown', (e) =>
       e.preventDefault
-      @_dirty = true
+      @_dirty++
       @_tap(e)
 
     @_$question.on 'click', (e) =>
-      @_dirty = true
+      @_dirty++
       @_tap(e)
 
 
@@ -142,7 +167,7 @@ BonusQuestion::_tap = (e) ->
       interval = @_arr[i]-@_arr[i-1]
       delta = Math.abs(@_step-interval)
       percent = delta/@_step
-      difficulty = 50 # чем больше число, тем сложнее пройти тест
+      difficulty = 25 # чем больше число, тем сложнее пройти тест
       # penalty = percent * 10 # сложность: чем больше число, тем сложнее
       bonus = 5 - (difficulty * percent)
       bonus = 0 if bonus < 0
@@ -225,6 +250,8 @@ Attempt::_sendAnswers = () ->
       @_callback(data)
     error: (xhr, textStatus, error) ->
       console.log xhr.responseJSON
+      @_$loader.fadeOut()
+      @_callback({score:0})
 
 Attempt::_getQuestions = () ->
   $.ajax 
@@ -326,6 +353,7 @@ class Testing
   @init = () ->
     ee.addListener('ui_TestingCtrl', testingController)
     ee.addListener('PlayerCtrl', testingController)
+    Noisebox.init()
     
     spin_opts = {lines: 12, length: 6, width: 3, radius: 8, corners: 0.9, rotate: 0, color: '#000000', speed: 1, trail: 49, shadow: false, hwaccel: false, className: 'spinner', zIndex: 2e9, top: '50%', left: '50%'}
     $loader = $('.screen_test .auth-loader')
