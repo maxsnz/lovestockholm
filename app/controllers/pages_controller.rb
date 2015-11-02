@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   after_action :allow_widget_iframe, only: :widget
+  after_action :allow_widget_iframe, only: :map
 
   def widget
     render layout: false
