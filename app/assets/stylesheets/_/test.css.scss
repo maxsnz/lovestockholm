@@ -36,6 +36,7 @@
   .question-option {
     font:18px/34px $regular;cursor: pointer; color:$gray;
     &:hover {color:#fff;}
+    span {display: inline-block; line-height: 24px;}
   }
   .question .next { 
     @include g-sprite('next'); cursor: pointer;
@@ -129,6 +130,7 @@
       font-size: 16px;
     }
   }
+  .next {content:'ГОТОВО'; padding-left:50px;}
 }
 
 .question-type-bonus {

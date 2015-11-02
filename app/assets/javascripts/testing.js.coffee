@@ -69,7 +69,7 @@ Question::_timeout = () ->
   @_answer(s)
 
 Question::_answer = (value) ->
-  @_timer.remove()
+  @_timer.remove() if @_timer
   @_$question.fadeOut 500, ->
     $(@).remove()
   @_callback(value)
@@ -84,6 +84,7 @@ BonusQuestion = (step, callback) ->
   @_$blinker = undefined
   @_$progress = undefined
   @_arr = []
+  @_dirty = false
   @_init()
 
 BonusQuestion.prototype = Object.create(Question.prototype)
@@ -105,18 +106,24 @@ BonusQuestion::_init = () ->
       @_blink() unless $bit[0].paused
     ), @_step
     $bit.on 'ended',  =>
-      clearInterval(blinkInterval)
+      if @_dirty
+        clearInterval(blinkInterval)
+      else
+        $bit.currentTime = 0
+        $bit.get(0).play()
 
     $(document).on 'keydown', (e) =>
       e.preventDefault
+      @_dirty = true
       @_tap(e)
 
     @_$question.on 'click', (e) =>
+      @_dirty = true
       @_tap(e)
 
 
-  @_timer = new Timer 100, @_$question.find('.question_timer'), =>
-    @_timeout()
+  # @_timer = new Timer 100, @_$question.find('.question_timer'), =>
+  #   @_timeout()
 
 BonusQuestion::_timeout = () ->
   @_finish()
@@ -129,7 +136,7 @@ BonusQuestion::_tap = (e) ->
     d = new Date()
     @_arr.push d
     @_blink()
-    @_$progress.css('width', @_arr.length/20*100+'%')
+    @_$progress.css('width', @_arr.length/21*100+'%')
     if @_arr.length > 1
       i = @_arr.length-1
       interval = @_arr[i]-@_arr[i-1]
@@ -145,7 +152,7 @@ BonusQuestion::_tap = (e) ->
 
 BonusQuestion::_finish = () ->
   @_score = Math.round(@_score)
-  @_timer.remove()
+  # @_timer.remove()
   $(document).off 'keydown'
   @_$question.off 'click'
   @_$question.find('.progressbar').hide()
