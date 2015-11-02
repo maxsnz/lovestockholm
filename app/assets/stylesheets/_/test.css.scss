@@ -39,9 +39,11 @@
     span {display: inline-block; line-height: 24px;}
   }
   .question .next { 
-    @include g-sprite('next'); cursor: pointer;
+    cursor: pointer;
+    background: inline-image('base64/next.png') 100% 50% no-repeat;
+    width:32px; height:29px;
     position: absolute; bottom:77px; right:0;
-    &:hover {@include g-sprite('next-hover');}
+    &:hover {background-image: inline-image('base64/next-hover.png');}
   }
 }
 
@@ -99,8 +101,9 @@
     width: 110px; height: 110px; 
     // display: block; float:left;
     display: inline-block;
-    background: inline-image('base64/order-item.png') 50% 50% no-repeat;
+    background: inline-image('base64/order-item-transparent.png') 50% 50% no-repeat;
     vertical-align: top;
+    &:hover {background-image: inline-image('base64/order-item.png');}
   }
   .question-options-container {text-align: center; vertical-align: top;}
   .question-option-text {
@@ -130,7 +133,9 @@
       font-size: 16px;
     }
   }
-  .next {content:'ГОТОВО'; padding-left:50px;}
+  .next {padding-left:50px; color:$gray; padding-right:90px;}
+  .next:before {content:'ГОТОВО';  font:20px/33px $regular; } 
+  .next:hover {color:#fff;}
 }
 
 .question-type-bonus {
