@@ -54,6 +54,7 @@ window.initMap = ->
   map = new (google.maps.Map)(document.getElementById('map'),
     zoom: 7
     disableDefaultUI: true
+    scrollwheel: false
     center:
       lat: 60.2312266
       lng: 28.0543429)
