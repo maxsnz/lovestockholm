@@ -36,7 +36,7 @@
   .question-option {
     font:18px/34px $regular;cursor: pointer; color:$gray;
     &:hover {color:#fff;}
-    span {display: inline-block; line-height: 24px;}
+    span {display: inline-block; line-height: 24px; vertical-align: middle;}
   }
   .question .next { 
     cursor: pointer;
