@@ -4,11 +4,13 @@ class Noisebox
   $box = undefined
   @inited = false
 
-  @bum = () ->
+  @bum = (callback) ->
     $p = $box.find('audio').eq(currentPlayer)
     $p.get(0).play()
     currentPlayer++
-    currentPlayer = 0 if currentPlayer is playersLength 
+    currentPlayer = 0 if currentPlayer is playersLength
+    $p.get(0).onplaying = ->
+      callback() if typeof callback is "function"
 
   @init = () ->
     $box = $('<div/>').addClass('noisebox')
@@ -131,10 +133,11 @@ BonusQuestion::_init = () ->
       if @_dirty > 4
         clearInterval blinkInterval
       else
-        setTimeout (=>
-          @_blink() 
-        ), 100
-        Noisebox.bum()
+        # setTimeout (=>
+        #   @_blink() 
+        # ), 100
+        Noisebox.bum =>
+          @_blink()
     ), @_step
 
     $(document).on 'keydown', (e) =>
