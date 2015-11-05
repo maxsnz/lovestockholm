@@ -1,11 +1,11 @@
 ru:
   meta:
     _defaults:
-      og:title: 'Lovestockholm'
+      og:title: 'Шведская волна'
       og:type: article
       og:image: share.png
       og:site_name: Lovestockholm
-      og:description: 'Lovestockholm'
+      og:description: 'Поймай шведскую волну — гид по музыкальному Стокгольму и викторина. Выиграй морской круиз!#шведскаяволна'
     
     pages:
       index: 
