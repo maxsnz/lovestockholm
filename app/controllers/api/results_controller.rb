@@ -8,13 +8,25 @@ class Api::ResultsController < Api::BaseController
     #   result.correct_answers = CollectRandomQuestions::LIMIT
     #   render_result(result)
     # els
-    if result.save
-      render_json({id: result.id, questions: result.questions.sort_by(&:id)})
+
+    limit = count_limit(player)
+    if limit > 0 
+      if result.save
+        render_json({id: result.id, questions: result.questions.sort_by(&:id)})
+      else
+        json = {id: nil, errors: result.errors.as_json}.to_json.gsub(/player\./, '')
+        render_json(json, status: 422)
+      end
     else
-      json = {id: nil, errors: result.errors.as_json}.to_json.gsub(/player\./, '')
+      errors = {'state': 'toomuch', 'limit': limit}
+      json = {id: nil, errors: errors.as_json}.to_json.gsub(/player\./, '')
       render_json(json, status: 422)
     end
   end
+
+  def count_limit(player)
+    Result::LIMIT - Result.where("created_at >= ?", Time.zone.now.beginning_of_day).where(player:player).where(state:'done').length
+  end 
 
   def update
     result = Result.with_state(Result::PENDING).joins(:player).where(players: {uid: extract_uid}, id: params[:id]).first
@@ -52,7 +64,8 @@ class Api::ResultsController < Api::BaseController
   private
 
   def render_result(result)
-    render_json({id: result.id, state: result.state, score: result.score})
+    limit = count_limit(result.player)
+    render_json({id: result.id, state: result.state, score: result.score, limit: limit})
   end
 
   def extract_uid

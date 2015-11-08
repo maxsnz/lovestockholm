@@ -114,7 +114,9 @@ p a {text-decoration: none; color:$gray;}
     .icon_2 {@include g-sprite('test-icon_2');}
     .icon_3 {@include g-sprite('test-icon_3');}
   }
-
+  .player-state.toomuch {
+    p {    font-size: 20px;margin-top: 70px;}
+  }
   .start-button {
     display: inline-block;
     padding: 0 30px;

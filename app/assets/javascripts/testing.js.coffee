@@ -204,8 +204,8 @@ Attempt = (player, callback) ->
   return
 
 Attempt::_init = () ->
-  @_getQuestions()
-  @_$loader = $('.popup_test .loader')
+  @_getQuestions =>
+    @_$loader = $('.popup_test .loader')
   # @_$c.html('')
   return
 
@@ -250,13 +250,14 @@ Attempt::_sendAnswers = () ->
     }
     success: (data) =>
       @_$loader.fadeOut()
+
       @_callback(data)
     error: (xhr, textStatus, error) ->
       console.log xhr.responseJSON
       @_$loader.fadeOut()
       @_callback({score:0})
 
-Attempt::_getQuestions = () ->
+Attempt::_getQuestions = (callback) ->
   $.ajax 
     type: 'POST'
     url: '/api/results'
@@ -265,9 +266,9 @@ Attempt::_getQuestions = () ->
       token: @_player.token
     }
     success: (data) =>
-      # console.log 'questions recieved!', data
       @_id = data.id
       @_questions = data.questions
+      callback()
 
       # debug start
       # @_answers = []

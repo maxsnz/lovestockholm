@@ -20,8 +20,11 @@ class Player
         email: Player.data.email
         picture: Player.data.photo
       }
-      success: (data) =>
-        Player.setState 'authorized'
+      success: (data) =>  
+        if data.limit > 0
+          Player.setState 'authorized'
+        else
+          Player.setState 'toomuch' 
         ee.emitEvent('PlayerCtrl', [ action:'authorized' ])
         Player.updateScore()
       error: (xhr, textStatus, error) ->
@@ -53,6 +56,9 @@ class Player
       $('.player-place span').html(data.place)
       $('.player-name').html(data.name)
       $('.player-position').removeClass('loading')
+      unless (data.limit > 0) 
+        $('.rotate-near-tryanotherone, .tryanotherone').remove()
+        Player.setState 'toomuch'
 
   @getPlayer = (callback) ->
     $.ajax 

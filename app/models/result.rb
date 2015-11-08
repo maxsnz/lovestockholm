@@ -1,6 +1,8 @@
 class Result < ActiveRecord::Base
   attr_accessor :correct_answers
 
+  LIMIT = 15
+
   self.per_page = 200
 
   belongs_to :player#, autosave: true

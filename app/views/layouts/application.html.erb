@@ -17,6 +17,7 @@
   <%= csrf_meta_tags %>
   <%= yield :head %>
   <%= render("_/google_analytics") if Rails.env.production? %>
+  <%= render("_/yandex_metrica") if Rails.env.production? %>
 </head>
 <body>
   <%= yield %>

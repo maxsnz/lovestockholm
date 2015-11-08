@@ -4,8 +4,10 @@ class Api::PlayersController < Api::BaseController
     player.name = params[:name]
     player.picture = params[:picture]
 
+
     if player.persisted?
-      render_json({token: :token, status: 'authorized'})
+      limit = count_limit(player)
+      render_json({token: :token, status: 'authorized', limit: limit})
     elsif player.save
       render_json({token: :token, status: 'success'})
     else
@@ -28,11 +30,16 @@ class Api::PlayersController < Api::BaseController
     })
   end
 
+  def count_limit(player)
+    Result::LIMIT - Result.where("created_at >= ?", Time.zone.now.beginning_of_day).where(player:player).where(state:'done').length
+  end  
+
   def show
     id = params[:id]
     player =  Player.where(uid: params[:id])[0]
+    limit = count_limit(player)
     place =  Player.all.order(score: :desc).index(player) + 1
-    render_json({score: player.score, picture: player.picture, name: player.name, place: place})
+    render_json({score: player.score, picture: player.picture, name: player.name, place: place, limit: limit})
   end
 
   def extract_uid
