@@ -133,7 +133,7 @@ body.about .newroute {display: block;}
 .screen_about {
   background: $blue image-url('map-bg.jpg') 50% 0 no-repeat;     position: fixed;
   .inner {position: relative; width:1020px; height:540px; margin:0px auto;}
-  .content-position {position: absolute; top:137px; left:156px;}
+  .content-position {position: absolute; top:137px; left:156px;width: 540px;}
   p  {font:18px/26px $regular; margin-bottom: 40px;}
   p.small  {font:12px/24px $regular; }
   a.buybutton {
@@ -143,4 +143,99 @@ body.about .newroute {display: block;}
   }
 
   // .newroute {}
+}
+
+@media only screen and (max-width: 950px) {
+  .newroute { margin-right: -380px;}
+  .top-menu {margin-left: -400px;}
+}
+
+@media only screen and (max-width: 750px) {
+  .newroute { margin-right: -280px;}
+  .top-menu {margin-left: -300px;}
+  .screen_about .content-position {left: 80px;}
+}
+
+@media only screen and (max-width: 650px) {
+  .screen_finish .route-start {font-size: 21px; line-height: 30px;     padding-left: 10px;}
+  .screen_finish .route-car {font-size: 22px; line-height: 19px;  padding: 51px 10px 0;}
+  .screen_finish .route-ship {padding: 48px 13px 0;}
+  .screen_about .content-position {left: 80px;}
+  .screen_about .content-position {top: 120px;left: 115px; width: 370px;}
+}
+
+@media only screen and (max-width: 550px) {
+  .newroute { margin-right: -230px;}
+  .top-menu {margin-left: -250px;}
+  .screen_finish .route-start {font-size: 17px;}
+  .screen_finish .route-car {font-size: 17px; }
+  .screen_finish .route-ship {font-size: 21px;}
+  .screen_finish .route-arrow {width: 20px;}
+  .screen_start h1 { margin: 44px auto 85px;    width: 400px;}
+  .screen_about .content-position {
+    top: 111px;
+    left: 65px;
+    width: 340px;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .newroute { margin-right: -230px;}
+  .top-menu {margin-left: -150px;}
+  .top-menu .menu-icon_1, .top-menu .menu-icon_2 {
+      width: 46px;
+      height: 27px;
+      background-size: 40%;
+  }
+  .top-menu .goabout {
+    font-size: 13px;
+    line-height: 27px;
+    color: #848d8f;
+    padding-left: 13px;
+  }
+  .newroute {
+    margin-right: -131px;
+    width: 88px;
+    font-size: 12px;
+    line-height: 36px;
+    background-size: 35%;
+    top: 25px;
+    &:hover { background-size: 35%;}
+  }
+  .screen_start h1 {margin: 40px auto 60px;width: 300px; font-size: 30px;line-height: 32px;}
+  .screen_start input.map-input {width: 190px;}
+  .screen_finish .route-ship {
+    font-size: 12px;
+    background-size: 61%;
+    padding: 20px 8px 0;
+  }
+  .screen_finish .route-arrow {
+    width: 10px;
+    background-size: 120%;
+    height: 45px;
+  }
+  .screen_finish .route-car {
+    font-size: 12px;
+    padding: 24px 7px 0;
+    background-size: 50%;
+    line-height: 17px;
+    background-position: 50% 6px;
+  }
+  .screen_finish .route-start {
+    font-size: 12px;
+    line-height: 20px;
+  }
+  .screen_finish .route-start span {
+    font-size: 22px;
+    line-height: 18px;
+  }
+  .screen_finish p.shortcopy {
+    padding-top: 20px;
+    font-size: 17px;
+    line-height: 22px;
+  }
+  .screen_about .content-position {
+    top: 75px;
+    left: 10px;
+    width: 280px;
+  }
 }
