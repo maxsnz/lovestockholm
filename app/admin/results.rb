@@ -1,6 +1,8 @@
 ActiveAdmin.register Result do
   config.sort_order = "created_at_desc"
-  config.filters = false
+  # config.filters = true
+  filter :player 
+  filter :seconds
   actions :all, except: [ :new, :create, :edit ]
   menu label: "Результаты"
 

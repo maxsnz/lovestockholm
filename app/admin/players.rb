@@ -1,6 +1,6 @@
 ActiveAdmin.register Player do
   config.sort_order = "name_asc"
-  config.filters = true
+  config.filters = false
   actions :all, except: [ :new, :create, :edit ]
   menu label: "Участники"
 
