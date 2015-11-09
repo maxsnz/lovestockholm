@@ -36,8 +36,13 @@ ru:
         correct: Верный ответ
       result:
         player: Участник
-        seconds: Результат
-        created_at: Время
+        seconds: Затраченное время
+        created_at: Дата
+        score: Очки
+      player:
+        player: Участник
+        score: Очки
+        attempts: Количество попыток
 
   simple_form:
     hints:

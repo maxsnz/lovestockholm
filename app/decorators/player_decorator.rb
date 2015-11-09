@@ -19,7 +19,8 @@ class PlayerDecorator < Draper::Decorator
     h.image_tag model.picture
   end
   def score
-    model.results.where(:state => Result::DONE).sum(:score)
+    model.score
+    # model.results.where(:state => Result::DONE).sum(:score)
   end
   def attempts
     model.results.where(:state => Result::DONE).length
