@@ -9,7 +9,7 @@ class Api::PlayersController < Api::BaseController
       limit = count_limit(player)
       render_json({token: :token, status: 'authorized', limit: limit})
     elsif player.save
-      render_json({token: :token, status: 'success'})
+      render_json({token: :token, status: 'success', limit: 15})
     else
       json = {id: nil, errors: player.errors.as_json}.to_json.gsub(/player\./, '')
       render_json(json, status: 422)
