@@ -23,7 +23,9 @@ class PlayerDecorator < Draper::Decorator
     # model.results.where(:state => Result::DONE).sum(:score)
   end
   def attempts
-    model.results.where(:state => Result::DONE).length
+    url = '/admin/results?q[player_id_eq]='+model.id.to_s
+    a = model.results.where(:state => Result::DONE).length
+    h.link_to a, url, :target => "_blank"
   end
   def created_at
     model.created_at.strftime("%d.%m.%Y  %H:%M ")
