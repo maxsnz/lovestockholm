@@ -69,7 +69,10 @@ p a {text-decoration: none; color:$gray;}
     margin:0 3px; 
     vertical-align: top;
   }
-  .like-fb {    padding-right: 15px;}
+  .like-fb { 
+    width: 125px; padding-right: 0px;
+    .like-container {width:111px;}
+  }
   .fb-like {    top: -5px}
   .like-tw a {font-size:0;}
 }

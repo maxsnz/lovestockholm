@@ -9,6 +9,7 @@ html
 
     = render "_/google_analytics" if Rails.env.production?
     = render("_/yandex_metrica") if Rails.env.production?
+    = render :partial => '_/sharing_includes'
 
   body
     .screens
@@ -35,6 +36,6 @@ html
     .loader 
 
 
-    = render :partial => '_/sharing_includes'
+   
     = render '_/tmpls'
     = javascript_include_tag "widget" 
