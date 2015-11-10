@@ -25,19 +25,24 @@ class Api::ResultsController < Api::BaseController
   end
 
   def count_limit(player)
-    Result::LIMIT - Result.where("created_at >= ?", Time.zone.now.beginning_of_day).where(player:player).where(state:'done').length
+    Result::LIMIT - Result.where("created_at >= ?", Time.zone.now.beginning_of_day).where(player:player).length
   end 
 
   def update
     result = Result.with_state(Result::PENDING).joins(:player).where(players: {uid: extract_uid}, id: params[:id]).first
-
-    if result
-      UpdateResult.call(result, params[:answers])
-      render_result(result)
-      player = Player.all.where(uid:extract_uid)[0]
-      update_player_score(player)
+    player = Player.find_or_initialize_by(uid: extract_uid)
+    limit = count_limit(player)
+    if limit > 0 
+      if result
+        UpdateResult.call(result, params[:answers])
+        render_result(result)
+        player = Player.all.where(uid:extract_uid)[0]
+        update_player_score(player)
+      else
+        render_json({error: "not found"}, status: 422)
+      end
     else
-      render_json({error: "not found"}, status: 422)
+      render_json({error: "too much attempts"}, status: 422)
     end
   end
 

@@ -252,7 +252,7 @@ Attempt::_sendAnswers = () ->
       @_$loader.fadeOut()
 
       @_callback(data)
-    error: (xhr, textStatus, error) ->
+    error: (xhr, textStatus, error) =>
       console.log xhr.responseJSON
       @_$loader.fadeOut()
       @_callback({score:0})

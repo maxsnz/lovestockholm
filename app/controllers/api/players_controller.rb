@@ -31,7 +31,7 @@ class Api::PlayersController < Api::BaseController
   end
 
   def count_limit(player)
-    Result::LIMIT - Result.where("created_at >= ?", Time.zone.now.beginning_of_day).where(player:player).where(state:'done').length
+    Result::LIMIT - Result.where("created_at >= ?", Time.zone.now.beginning_of_day).where(player:player).length
   end  
 
   def show
