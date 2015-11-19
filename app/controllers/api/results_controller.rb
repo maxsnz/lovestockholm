@@ -32,7 +32,7 @@ class Api::ResultsController < Api::BaseController
     result = Result.with_state(Result::PENDING).joins(:player).where(players: {uid: extract_uid}, id: params[:id]).first
     player = Player.find_or_initialize_by(uid: extract_uid)
     limit = count_limit(player)
-    if limit > 0 
+    if limit >= 0 
       if result
         UpdateResult.call(result, params[:answers])
         render_result(result)

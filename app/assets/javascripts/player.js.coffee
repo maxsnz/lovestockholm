@@ -56,6 +56,7 @@ class Player
       $('.player-place span').html(data.place)
       $('.player-name').html(data.name)
       $('.player-position').removeClass('loading')
+      console.log 'update score', data.limit
       unless (data.limit > 0) 
         $('.rotate-near-tryanotherone, .tryanotherone').remove()
         Player.setState 'toomuch'

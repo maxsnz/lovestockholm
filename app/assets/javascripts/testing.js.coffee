@@ -317,6 +317,7 @@ class Testing
     $('.screen_test .bottom-position .menu').addClass('unavaliable')
     stateController('started')
     attempt = new Attempt Player.data, (obj) =>
+      console.log 'attempt end', obj
       $r = $('.result_container')
       $r.find('.pic img').attr('src', Player.data.photo)
       $r.find('.score').html(obj.score)
