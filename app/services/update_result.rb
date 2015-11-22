@@ -12,12 +12,17 @@ class UpdateResult
     result.seconds = (Time.now.to_f - result.start).round(2)
     result.score = 0
     i = 0
-    result.questions.all.find_each { |q|
+    while i < 9 do
+    # result.questions.all.find_each { |q|
+      q = result.questions[i]
       if q.correct == answers[i]['option'].to_i
-        result.score = result.score + (100-answers[i]['time'].to_i)
+        if (answers[i]['time'].to_i > 0)
+          result.score = result.score + (100-answers[i]['time'].to_i)
+        end
       end
       i +=1
-    }
+    end
+    # }
     bonus = answers[answers.length - 1]['option'].to_i
     result.score = result.score + bonus if bonus < 101 && bonus > 0
 

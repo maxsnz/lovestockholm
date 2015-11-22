@@ -12,7 +12,7 @@ class Api::ResultsController < Api::BaseController
     limit = count_limit(player)
     if limit > 0 
       if result.save
-        render_json({id: result.id, questions: result.questions.sort_by(&:id)})
+        render_json({id: result.id, questions: result.questions}) # .sort_by(&:id)
       else
         json = {id: nil, errors: result.errors.as_json}.to_json.gsub(/player\./, '')
         render_json(json, status: 422)
