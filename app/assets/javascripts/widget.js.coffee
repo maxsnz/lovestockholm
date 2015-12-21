@@ -21,7 +21,7 @@ preload = () ->
 $ ->
   preload()
   window.ee = new EventEmitter()
-  Navigation.init({currentScreen:'main'})
+  Navigation.init({currentScreen:'finish'})
   # Navigation.openPopup('result')
   Player.init()
   Testing.init()

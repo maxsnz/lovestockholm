@@ -60,7 +60,7 @@ p a {text-decoration: none; color:$gray;}
 }
 
 .share-board {
-  position: absolute; bottom:58px;     right: 50%; margin-right: -490px;
+  position: absolute; bottom:58px;     right: 50%; margin-right: -520px;
   .like-container {overflow:hidden; width:78px; height:21px;}
   .like-button  {
     display: inline-block; 
@@ -70,8 +70,8 @@ p a {text-decoration: none; color:$gray;}
     vertical-align: top;
   }
   .like-fb { 
-    width: 125px; padding-right: 0px;
-    .like-container {width:111px;}
+    width: 150px; padding-right: 0px;
+    .like-container {width:140px;}
   }
   .fb-like {    top: -5px}
   .like-tw a {font-size:0;}
@@ -284,7 +284,7 @@ p a {text-decoration: none; color:$gray;}
     font:26px/45px $regular; text-align: center;
     color:#6a92b1; 
     span {font:36px/36px $regular;color:$yellow;}
-  }
+  } 
   .player-name {font:26px/32px $bold; color:#fff;     margin-top: 20px;}
   .loader {width:100%; height:340px; position: relative;}
 }
@@ -298,6 +298,14 @@ p a {text-decoration: none; color:$gray;}
     margin: 0px auto;
     display: block;
   }
+}
+
+.screen_finish {
+  text-align: center;
+  p {font-size: 20px; line-height: 26px; color:#fff;     margin-bottom: 20px;}
+  p.big {font-size:38px; line-height:40px;}
+  p.yellow {color:$yellow;}
+  .icon-finish {@include g-sprite('icon-finish'); margin:25px auto;}
 }
 
 
