@@ -5,9 +5,9 @@ CarrierWave.configure do |config|
   config.ftp_user = "maxsnz_lovestockholm"
   config.ftp_passwd = "PV/bL3Ra"
   config.ftp_folder = ""
-  config.ftp_folder = "dev" if Rails.env.development?
+  # config.ftp_folder = "dev" if Rails.env.development?
   config.ftp_url = "http://ccmbr.ru/uploads/lovestockholm"
-  config.ftp_url = "http://ccmbr.ru/uploads/lovestockholm/dev" if Rails.env.development?
+  # config.ftp_url = "http://ccmbr.ru/uploads/lovestockholm/dev" if Rails.env.development?
   config.ftp_passive = true # false by default
 
   config.enable_processing = false if Rails.env.test?
